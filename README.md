@@ -17,3 +17,8 @@
 - C# bindings: https://github.com/rabbitmq/rabbitmq-dotnet-client, made by RabbitMQ team and community
 - GO bindings: https://github.com/streadway/amqp, made by Streadway
 - Docker image: https://github.com/docker-library/rabbitmq, made by Docker team and community
+
+**MongoDB** - Cross-platform document-oriented database
+- Repository: https://github.com/mongodb/mongo, made by MongoDB team and community
+- GO bindings: http://labix.org/mgo, made by Gustavo Niemeyer
+- Docker image: https://github.com/dockerfile/mongodb, made by Docker team and community
