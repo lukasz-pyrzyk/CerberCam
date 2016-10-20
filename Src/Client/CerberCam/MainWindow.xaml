@@ -7,6 +7,6 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
     <Grid>
-        
+        <Button Command="{Binding SendCommand}" Width="100" Height="100" Content="Click to send"/>
     </Grid>
 </Window>

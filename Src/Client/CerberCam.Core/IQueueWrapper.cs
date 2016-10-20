@@ -1,9 +1,7 @@
-﻿using System.Threading.Tasks;
-
-namespace CerberCam.Core
+﻿namespace CerberCam.Core
 {
     public interface IQueueWrapper
     {
-        Task SendAsync(Message msg);
+        void SendAsync(Message msg);
     }
 }

@@ -1,11 +1,10 @@
 ﻿using System.IO;
-using System.Threading.Tasks;
 using ProtoBuf;
 using RabbitMQ.Client;
 
 namespace CerberCam.Core
 {
-    internal class QueueManager : IQueueWrapper
+    public class QueueManager : IQueueWrapper
     {
         private const string hostName = "cerbercam.cloudapp.net";
         private const string queueName = "picturesQueue";
@@ -21,7 +20,7 @@ namespace CerberCam.Core
             _factory = connectionFactory;
         }
 
-        public async Task SendAsync(Message msg)
+        public void SendAsync(Message msg)
         {
             using (IConnection connection = _factory.CreateConnection())
             {
