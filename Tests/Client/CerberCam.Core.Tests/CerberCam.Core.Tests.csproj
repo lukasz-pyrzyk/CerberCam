@@ -75,6 +75,12 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Src\Client\CerberCam.Core\CerberCam.Core.csproj">
+      <Project>{a29ce24b-39a3-4a26-8476-0016a88d1a8c}</Project>
+      <Name>CerberCam.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>
