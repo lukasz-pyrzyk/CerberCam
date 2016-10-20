@@ -17,9 +17,9 @@ namespace CerberCam
         }
 
         public ICommand SendCommand => _clickCommand ??
-            (_clickCommand = new CommandHandler(() => SendAsync(), _canExecute));
+            (_clickCommand = new CommandHandler(() => Send(), _canExecute));
 
-        public void SendAsync()
+        public void Send()
         {
             Message msg = new Message { Email = "lukasz.pyrzyk@gmail.com" };
             _wrapper.SendAsync(msg);
