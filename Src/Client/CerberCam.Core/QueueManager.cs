@@ -33,7 +33,7 @@ namespace CerberCam.Core
                                  autoDelete: false,
                                  arguments: null);
 
-                    byte[] data = SerializeMessage(msg);
+                    byte[] data = SerializeMessage(ref msg);
 
                     channel.BasicPublish(exchange: "",
                                  routingKey: queueName,
@@ -43,7 +43,7 @@ namespace CerberCam.Core
             }
         }
 
-        private byte[] SerializeMessage(Message msg)
+        private byte[] SerializeMessage(ref Message msg)
         {
             using (MemoryStream stream = new MemoryStream())
             {
