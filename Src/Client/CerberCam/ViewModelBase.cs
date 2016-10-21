@@ -1,6 +1,9 @@
-﻿using System.Threading.Tasks;
+﻿using System.Drawing.Imaging;
+using System.IO;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using CerberCam.Core;
+using CerberCam.Core.Properties;
 
 namespace CerberCam
 {
@@ -21,7 +24,19 @@ namespace CerberCam
 
         public void Send()
         {
-            Message msg = new Message { Email = "lukasz.pyrzyk@gmail.com" };
+            byte[] data;
+            using (MemoryStream ms = new MemoryStream())
+            {
+                Resources.golang_sh_600x600.Save(ms, ImageFormat.Bmp);
+                data = ms.ToArray();
+            }
+
+            Message msg = new Message
+            {
+                Email = "lukasz.pyrzyk@gmail.com",
+                Photo = data
+            };
+
             _wrapper.SendAsync(msg);
         }
     }
