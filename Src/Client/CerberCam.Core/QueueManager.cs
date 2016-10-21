@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Threading.Tasks;
 using ProtoBuf;
 using RabbitMQ.Client;
 
@@ -20,7 +21,7 @@ namespace CerberCam.Core
             _factory = connectionFactory;
         }
 
-        public void SendAsync(Message msg)
+        public void SendAsync(ref Message msg)
         {
             using (IConnection connection = _factory.CreateConnection())
             {

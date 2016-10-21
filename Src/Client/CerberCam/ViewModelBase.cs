@@ -37,7 +37,7 @@ namespace CerberCam
                 Photo = data
             };
 
-            _wrapper.SendAsync(msg);
+            Task.Run(() => _wrapper.SendAsync(ref msg));
         }
     }
 }

@@ -31,7 +31,7 @@ namespace CerberCam.Core.Tests
             IQueueWrapper wrapper = new QueueManager(factory);
 
             // Act
-            wrapper.SendAsync(message);
+            wrapper.SendAsync(ref message);
 
             // Assert
             channel.Received(1).BasicPublish(Arg.Any<string>(), Arg.Any<string>(), Arg.Any<IBasicProperties>(), Arg.Is<byte[]>(x => x.SequenceEqual(expectedSerializationBytes)));

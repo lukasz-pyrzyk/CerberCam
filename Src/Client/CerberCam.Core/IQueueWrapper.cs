@@ -2,6 +2,6 @@
 {
     public interface IQueueWrapper
     {
-        void SendAsync(Message msg);
+        void SendAsync(ref Message msg);
     }
 }
