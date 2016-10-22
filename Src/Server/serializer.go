@@ -1,11 +1,6 @@
 package main
 
-import (
-	"fmt"
-	"github.com/op/go-logging" 
-    "github.com/golang/protobuf/proto"
-    "./message"
-)
+// Deserialize
+func Deserialize(byte []body) Message {
 
-func Deserialize(byte[] body) pb.Message {
 }
