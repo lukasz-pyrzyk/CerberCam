@@ -27,7 +27,7 @@ namespace CerberCam
             byte[] data;
             using (MemoryStream ms = new MemoryStream())
             {
-                Resources.golang_sh_600x600.Save(ms, ImageFormat.Bmp);
+                Resources.golang_sh_600x600.Save(ms, ImageFormat.Jpeg);
                 data = ms.ToArray();
             }
 
