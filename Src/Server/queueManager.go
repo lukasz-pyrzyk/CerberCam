@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"os"
 
 	"github.com/streadway/amqp"
 )
@@ -35,9 +36,25 @@ func Receive() {
 	)
 	failOnError(err, "Failed to register a consumer")
 
+	i := 0
 	for d := range msgs {
 		msg := Deserialize(d.Body)
-		fmt.Printf("Received a message: %s", msg.Email)
+		fmt.Printf("Received a message: %s", *msg.Email)
+
+		// open output file
+		fo, err := os.Create(fmt.Sprintf("photo_%d.jpg", i))
+		failOnError(err, "Failed to create file")
+
+		i, err := fo.Write(msg.Photo)
+		failOnError(err, "Failed to write to file")
+
+		// close fo on exit and check for its returned error
+		defer func() {
+			err := fo.Close()
+			failOnError(err, "Failed to close file")
+		}()
+
+		i++
 	}
 
 	defer ch.Close()
