@@ -2,23 +2,25 @@
 
 ## Used open source projects:
 
-**Protocol Buffers** - language-neutral, platform-neutral extensible mechanism for serializing structured data
-- Repository: https://github.com/google/protobuf, made by Google team and community
-- C# bindings: https://github.com/mgravell/protobuf-net, made by Marc Gravell and community
-- GO bindings: https://github.com/golang/protobuf, made by Golang team and community
+- Autofixture https://github.com/AutoFixture/AutoFixture
+- Go-logging https://github.com/op/go-logging
+- NSubstitute https://github.com/nsubstitute/NSubstitute
+- Protobuf https://github.com/google/protobuf
+- Protobuf C# https://github.com/golang/protobuf
+- Protobuf GO https://github.com/mgravell/protobuf-net
+- RabbitMQ https://github.com/rabbitmq/rabbitmq-server
+- RabbitMQ C# https://github.com/rabbitmq/rabbitmq-dotnet-client
+- RabbitMQ GO https://github.com/streadway/amqp
+- RabbitMQ docker image https://github.com/docker-library/rabbitmq
+- TensorFlow https://github.com/tensorflow/tensorflow
+- TensorFlow GO https://github.com/danieldk/tensorflow
+- XUnit https://github.com/xunit/xunit
 
-**Zstandard** - real-time compression algorithm
-- Repository: https://github.com/facebook/zstd, made by Facebook team and community
-- C# bindings: https://github.com/skbkontur/ZstdNet, made by Skbkontur
-- GO bindings: https://github.com/DataDog/zstd, made by DataDog
+###Planned###
 
-**RabbitMQ** - feature rich, multi-protocol messaging broker
-- Repository: https://github.com/rabbitmq/rabbitmq-server, made by RabbitMQ team and community
-- C# bindings: https://github.com/rabbitmq/rabbitmq-dotnet-client, made by RabbitMQ team and community
-- GO bindings: https://github.com/streadway/amqp, made by Streadway
-- Docker image: https://github.com/docker-library/rabbitmq, made by Docker team and community
-
-**MongoDB** - Cross-platform document-oriented database
-- Repository: https://github.com/mongodb/mongo, made by MongoDB team and community
-- GO bindings: http://labix.org/mgo, made by Gustavo Niemeyer
-- Docker image: https://github.com/dockerfile/mongodb, made by Docker team and community
+- MongoDB https://github.com/mongodb/mongo
+- MongoDB GO http://labix.org/mgo, made by Gustavo Niemeyer
+- MongoDB docker image https://github.com/dockerfile/mongodb, made by Docker team and community
+- Zstandard https://github.com/facebook/zstd
+- Zstandard C# https://github.com/skbkontur/ZstdNet
+- Zstandard GO https://github.com/DataDog/zstd
