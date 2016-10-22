@@ -1,0 +1,4 @@
+message Message {
+  string Email = 1;
+  bytes Photo = 2;
+}
