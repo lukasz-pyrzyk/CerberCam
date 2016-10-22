@@ -3,11 +3,8 @@ package main
 import (
 	"fmt"
 
-	"github.com/op/go-logging"
 	"github.com/streadway/amqp"
 )
-
-var log = logging.MustGetLogger("logger")
 
 // Receive data from queue
 func Receive() {
@@ -38,11 +35,10 @@ func Receive() {
 	)
 	failOnError(err, "Failed to register a consumer")
 
-	go func() {
-		for d := range msgs {
-			fmt.Printf("Received a message: %s", d.Body)
-		}
-	}()
+	for d := range msgs {
+		msg := Deserialize(d.Body)
+		fmt.Printf("Received a message: %s", msg.Email)
+	}
 
 	defer ch.Close()
 	defer conn.Close()
