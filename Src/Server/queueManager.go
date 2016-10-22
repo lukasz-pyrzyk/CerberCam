@@ -2,10 +2,12 @@ package main
 
 import (
 	"fmt"
-	"log"
 
+	"github.com/op/go-logging"
 	"github.com/streadway/amqp"
 )
+
+var log = logging.MustGetLogger("logger")
 
 func Receive() {
 	conn, err := amqp.Dial("amqp://guest:guest@cerbercam.cloudapp.net:5672/")
@@ -47,7 +49,7 @@ func Receive() {
 
 func failOnError(err error, msg string) {
 	if err != nil {
-		log.Fatalf("%s: %s", msg, err)
+		log.Criticalf("%s: %s", msg, err)
 		panic(fmt.Sprintf("%s: %s", msg, err))
 	}
 }
