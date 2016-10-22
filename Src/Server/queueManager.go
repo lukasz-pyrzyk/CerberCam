@@ -9,6 +9,7 @@ import (
 
 var log = logging.MustGetLogger("logger")
 
+// Receive data from queue
 func Receive() {
 	conn, err := amqp.Dial("amqp://guest:guest@cerbercam.cloudapp.net:5672/")
 	failOnError(err, "Failed to connect to RabbitMQ")
@@ -39,7 +40,7 @@ func Receive() {
 
 	go func() {
 		for d := range msgs {
-			fmt.Print("Received a message: %s", d.Body)
+			fmt.Printf("Received a message: %s", d.Body)
 		}
 	}()
 

@@ -1,4 +1,4 @@
 message Message {
-  string Email = 1;
-  bytes Photo = 2;
+  required string Email = 1;
+  required bytes Photo = 2;
 }
