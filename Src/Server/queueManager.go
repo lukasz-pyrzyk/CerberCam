@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"os"
 
 	"github.com/streadway/amqp"
 )
@@ -58,7 +57,7 @@ func Send(queueName string) {
 }
 
 // Receive data from queue
-func Receive(queueName string) {
+func Receive(queueName string) <-chan amqp.Delivery {
 	q, ch, conn := openQueue(queueName)
 
 	msgs, err := ch.Consume(
@@ -72,27 +71,9 @@ func Receive(queueName string) {
 	)
 	failOnError(err, "Failed to register a consumer")
 
-	i := 0
-	for d := range msgs {
-		i++
-		msg := Deserialize(d.Body)
-		log.Infof("Received a message: %s", *msg.Email)
-
-		// open output file
-		fo, err := os.Create(fmt.Sprintf("photo_%d.jpg", i))
-		failOnError(err, "Failed to create file")
-
-		_, err = fo.Write(msg.Photo)
-		failOnError(err, "Failed to write to file")
-
-		// close fo on exit and check for its returned error
-		defer func() {
-			err := fo.Close()
-			failOnError(err, "Failed to close file")
-		}()
-	}
-
 	defer closeQueue(q, ch, conn)
+
+	return msgs
 }
 
 func failOnError(err error, msg string) {

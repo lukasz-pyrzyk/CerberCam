@@ -15,7 +15,7 @@ func main() {
 	switch *command {
 	case "receive":
 		log.Info("Receive started!")
-		Receive("picturesQueue")
+		HandleReceiveCommand()
 		break
 	case "send":
 		log.Info("Sending started!")
