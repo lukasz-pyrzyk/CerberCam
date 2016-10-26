@@ -14,11 +14,11 @@ func main() {
 
 	switch *command {
 	case "receive":
-		log.Info("Receive started")
+		log.Info("Receive started!")
 		Receive("picturesQueue")
 		break
 	case "send":
-		log.Info("sending started")
+		log.Info("Sending started!")
 		Send("alertsQueue")
 		break
 	default:

@@ -7,8 +7,14 @@ import (
 	"github.com/streadway/amqp"
 )
 
-// Send data to queue
-func Send(queueName string) {
+func closeQueue(queue amqp.Queue, channel *amqp.Channel, connection *amqp.Connection) {
+	log.Debugf("Closing queue '%s' and its connections...", queue.Name)
+	defer channel.Close()
+	defer connection.Close()
+}
+
+func openQueue(queueName string) (amqp.Queue, *amqp.Channel, *amqp.Connection) {
+
 	conn, err := amqp.Dial("amqp://guest:guest@cerbercam.cloudapp.net:5672/")
 	failOnError(err, "Failed to connect to RabbitMQ")
 
@@ -25,8 +31,17 @@ func Send(queueName string) {
 	)
 	failOnError(err, "Failed to declare a queue")
 
+	return q, ch, conn
+}
+
+// Send data to queue
+func Send(queueName string) {
+	q, ch, conn := openQueue(queueName)
+
+	log.Info("Sending message...")
+
 	body := "ALERT"
-	err = ch.Publish(
+	err := ch.Publish(
 		"",     // exchange
 		q.Name, // routing key
 		false,  // mandatory
@@ -37,27 +52,14 @@ func Send(queueName string) {
 		})
 	failOnError(err, "Failed to publish a message")
 
-	defer ch.Close()
-	defer conn.Close()
+	log.Info("Message sent successfully!")
+
+	defer closeQueue(q, ch, conn)
 }
 
 // Receive data from queue
 func Receive(queueName string) {
-	conn, err := amqp.Dial("amqp://guest:guest@cerbercam.cloudapp.net:5672/")
-	failOnError(err, "Failed to connect to RabbitMQ")
-
-	ch, err := conn.Channel()
-	failOnError(err, "Failed to open a receive channel")
-
-	q, err := ch.QueueDeclare(
-		queueName, // name
-		false,     // durable
-		false,     // delete when unused
-		false,     // exclusive
-		false,     // no-wait
-		nil,       // arguments
-	)
-	failOnError(err, "Failed to declare a queue")
+	q, ch, conn := openQueue(queueName)
 
 	msgs, err := ch.Consume(
 		q.Name, // queue
@@ -90,8 +92,7 @@ func Receive(queueName string) {
 		}()
 	}
 
-	defer ch.Close()
-	defer conn.Close()
+	defer closeQueue(q, ch, conn)
 }
 
 func failOnError(err error, msg string) {
