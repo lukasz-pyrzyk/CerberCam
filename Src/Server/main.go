@@ -22,6 +22,6 @@ func main() {
 		Send("alertsQueue")
 		break
 	default:
-		log.Error("Invalid operation. Accepting: 'receive'")
+		log.Errorf("Invalid operation. Accepting: 'receive' or 'send', %s provided", *command)
 	}
 }
