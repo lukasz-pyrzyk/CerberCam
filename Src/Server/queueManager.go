@@ -40,7 +40,7 @@ func Receive() {
 	for d := range msgs {
 		i++
 		msg := Deserialize(d.Body)
-		fmt.Printf("Received a message: %s", *msg.Email)
+		log.Infof("Received a message: %s", *msg.Email)
 
 		// open output file
 		fo, err := os.Create(fmt.Sprintf("photo_%d.jpg", i))
