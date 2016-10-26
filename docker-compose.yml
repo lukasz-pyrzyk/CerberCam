@@ -11,3 +11,6 @@ MongoDB:
   volumes:
     - /srv/docker/mongodb:/var/lib/mongodb
   restart: always
+CerberReceive:
+  image: lukaszpyrzyk/cerbercam
+  command: "-command=receive"
