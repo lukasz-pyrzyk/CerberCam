@@ -2,7 +2,6 @@ package main
 
 import (
 	"flag"
-	"fmt"
 
 	"github.com/op/go-logging"
 )
@@ -15,13 +14,13 @@ func main() {
 
 	switch *command {
 	case "receive":
-		fmt.Println("receive started")
+		log.Info("Receive started")
 		Receive()
 		break
 	case "send":
-		fmt.Println("sending started")
+		log.Info("sending started")
 		break
 	default:
-		fmt.Println("Invalid operation. Accepting: 'receive'")
+		log.Error("Invalid operation. Accepting: 'receive'")
 	}
 }
