@@ -1,8 +1,8 @@
 package main
 
 import (
+	"flag"
 	"fmt"
-	"os"
 
 	"github.com/op/go-logging"
 )
@@ -10,9 +10,10 @@ import (
 var log = logging.MustGetLogger("logger")
 
 func main() {
-	args := os.Args[1:] // get arguments without prog
+	command := (flag.String("command", "", "a command to run"))
+	flag.Parse()
 
-	switch args[0] {
+	switch *command {
 	case "receive":
 		fmt.Println("receive started")
 		Receive()
@@ -20,5 +21,7 @@ func main() {
 	case "send":
 		fmt.Println("sending started")
 		break
+	default:
+		fmt.Println("Invalid operation. Accepting: 'receive'")
 	}
 }
