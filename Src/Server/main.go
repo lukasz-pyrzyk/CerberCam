@@ -10,7 +10,7 @@ import (
 var log = logging.MustGetLogger("logger")
 
 func main() {
-	command := (flag.String("command", "", "a command to run"))
+	command := flag.String("command", "", "a command to run")
 	flag.Parse()
 
 	switch *command {
