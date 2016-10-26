@@ -1,5 +1,13 @@
 # CerberCam
 
+## Build:
+`go build *.go`
+
+## Usage:
+CerberCam supports idea of entry commands. For now, there is only one:
+
+`./main.go -command=receive`
+
 ## Used open source projects:
 
 - Autofixture https://github.com/AutoFixture/AutoFixture
