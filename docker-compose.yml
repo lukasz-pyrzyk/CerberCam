@@ -4,3 +4,10 @@ rabbitmq:
   ports:
     - 8080:15672
     - 5672:5672
+MongoDB:
+  image: sameersbn/mongodb:latest
+  ports:
+    - "27017:27017"
+  volumes:
+    - /srv/docker/mongodb:/var/lib/mongodb
+  restart: always
