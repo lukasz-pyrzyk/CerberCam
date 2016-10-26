@@ -4,7 +4,7 @@ import "gopkg.in/mgo.v2"
 
 // InsertToDatabase - insert message to database
 func InsertToDatabase(msg *Message) {
-	session, err := mgo.Dial("localhost")
+	session, err := mgo.Dial("MongoDB")
 	failOnError(err, "Unable to connect to MongoDB")
 
 	// Optional. Switch the session to a monotonic behavior.
