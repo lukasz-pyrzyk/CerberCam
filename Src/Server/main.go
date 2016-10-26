@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"os"
 
 	"github.com/op/go-logging"
 )
@@ -9,7 +10,15 @@ import (
 var log = logging.MustGetLogger("logger")
 
 func main() {
-	Receive()
+	args := os.Args[1:] // get arguments without prog
 
-	fmt.Printf("siema")
+	switch args[0] {
+	case "receive":
+		fmt.Println("receive started")
+		Receive()
+		break
+	case "send":
+		fmt.Println("sending started")
+		break
+	}
 }
