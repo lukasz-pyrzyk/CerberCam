@@ -15,10 +15,11 @@ func main() {
 	switch *command {
 	case "receive":
 		log.Info("Receive started")
-		Receive()
+		Receive("picturesQueue")
 		break
 	case "send":
 		log.Info("sending started")
+		Send("alertsQueue")
 		break
 	default:
 		log.Error("Invalid operation. Accepting: 'receive'")

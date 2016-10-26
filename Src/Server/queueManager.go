@@ -7,21 +7,55 @@ import (
 	"github.com/streadway/amqp"
 )
 
-// Receive data from queue
-func Receive() {
+// Send data to queue
+func Send(queueName string) {
 	conn, err := amqp.Dial("amqp://guest:guest@cerbercam.cloudapp.net:5672/")
 	failOnError(err, "Failed to connect to RabbitMQ")
 
 	ch, err := conn.Channel()
-	failOnError(err, "Failed to open a channel")
+	failOnError(err, "Failed to open a send channel")
 
 	q, err := ch.QueueDeclare(
-		"picturesQueue", // name
-		false,           // durable
-		false,           // delete when unused
-		false,           // exclusive
-		false,           // no-wait
-		nil,             // arguments
+		queueName, // name
+		false,     // durable
+		false,     // delete when unused
+		false,     // exclusive
+		false,     // no-wait
+		nil,       // arguments
+	)
+	failOnError(err, "Failed to declare a queue")
+
+	body := "ALERT"
+	err = ch.Publish(
+		"",     // exchange
+		q.Name, // routing key
+		false,  // mandatory
+		false,  // immediate
+		amqp.Publishing{
+			ContentType: "text/plain",
+			Body:        []byte(body),
+		})
+	failOnError(err, "Failed to publish a message")
+
+	defer ch.Close()
+	defer conn.Close()
+}
+
+// Receive data from queue
+func Receive(queueName string) {
+	conn, err := amqp.Dial("amqp://guest:guest@cerbercam.cloudapp.net:5672/")
+	failOnError(err, "Failed to connect to RabbitMQ")
+
+	ch, err := conn.Channel()
+	failOnError(err, "Failed to open a receive channel")
+
+	q, err := ch.QueueDeclare(
+		queueName, // name
+		false,     // durable
+		false,     // delete when unused
+		false,     // exclusive
+		false,     // no-wait
+		nil,       // arguments
 	)
 	failOnError(err, "Failed to declare a queue")
 
