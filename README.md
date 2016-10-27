@@ -1,4 +1,4 @@
-# CerberCam
+# CerberCam [![Docker Stars](https://img.shields.io/docker/stars/lukaszpyrzyk/cerbercam.svg)](https://hub.docker.com/r/lukaszpyrzyk/cerbercam/)
 
 ## Build:
 `go build *.go`
