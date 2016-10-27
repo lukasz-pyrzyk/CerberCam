@@ -12,6 +12,9 @@ CerberCam supports idea of entry commands. For now, there is only one:
 
 - Autofixture https://github.com/AutoFixture/AutoFixture
 - Go-logging https://github.com/op/go-logging
+- MongoDB https://github.com/mongodb/mongo
+- MongoDB GO http://labix.org/mgo, made by Gustavo Niemeyer
+- MongoDB docker image https://github.com/dockerfile/mongodb, made by Docker team and community
 - NSubstitute https://github.com/nsubstitute/NSubstitute
 - Protobuf https://github.com/google/protobuf
 - Protobuf C# https://github.com/golang/protobuf
@@ -25,10 +28,6 @@ CerberCam supports idea of entry commands. For now, there is only one:
 - XUnit https://github.com/xunit/xunit
 
 ###Planned###
-
-- MongoDB https://github.com/mongodb/mongo
-- MongoDB GO http://labix.org/mgo, made by Gustavo Niemeyer
-- MongoDB docker image https://github.com/dockerfile/mongodb, made by Docker team and community
 - Zstandard https://github.com/facebook/zstd
 - Zstandard C# https://github.com/skbkontur/ZstdNet
 - Zstandard GO https://github.com/DataDog/zstd
