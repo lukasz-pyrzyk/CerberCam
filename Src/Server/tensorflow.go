@@ -21,13 +21,18 @@ func recognize(msg Message, optionString string) {
 	options.Target = optionString
 
 	log.Info("Recognizing image...")
+	log.Info("Looking for model file...")
 
 	// Load the serialized GraphDef from a file.
 	modelfile, labelsfile, err := modelFiles(*modeldir)
 	failOnError(err, "No model file in model directory")
 
+	log.Info("Loading model file...")
+
 	model, err := ioutil.ReadFile(modelfile)
 	failOnError(err, "Unable to load model file!")
+
+	log.Info("Constructing graph...")
 
 	// Construct an in-memory graph from the serialized form.
 	graph := tensorflow.NewGraph()
@@ -35,10 +40,14 @@ func recognize(msg Message, optionString string) {
 		log.Fatal(err)
 	}
 
+	log.Info("Starting new session...")
+
 	// Create a session for inference over graph.
 	session, err := tensorflow.NewSession(graph, options)
 	failOnError(err, "Unable to start new tensorflow session")
 	defer session.Close()
+
+	log.Info("Creating tensor from image...")
 
 	// Run inference on thestImageFilename.
 	// For multiple images, session.Run() can be called in a loop (and
@@ -46,6 +55,8 @@ func recognize(msg Message, optionString string) {
 	// model accepts batches of image data as input.
 	tensor, err := makeTensorFromImage(msg.Photo)
 	failOnError(err, "Unable to make tensor from image!")
+
+	log.Info("Running recognition...")
 
 	output, err := session.Run(
 		map[tensorflow.Output]*tensorflow.Tensor{
@@ -57,6 +68,8 @@ func recognize(msg Message, optionString string) {
 		nil)
 
 	failOnError(err, "Error while running a tensorflow session")
+
+	log.Info("Gathering output...")
 
 	// output[0].Value() is a vector containing probabilities of
 	// labels for each image in the "batch". The batch size was 1.
