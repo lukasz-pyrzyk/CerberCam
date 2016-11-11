@@ -16,3 +16,23 @@ func InsertToDatabase(msg *Message) {
 
 	defer session.Close()
 }
+
+// ReceiveFromDatabase - Select messages from database
+func ReceiveFromDatabase() []Message {
+	session, err := mgo.Dial("cerbercam.cloudapp.net")
+	failOnError(err, "Unable to connect to MongoDB")
+
+	// Optional. Switch the session to a monotonic behavior.
+	session.SetMode(mgo.Monotonic, true)
+
+	var msg []Message
+
+	c := session.DB("cerberServer").C("messages")
+	err = c.Find(nil).Sort("-_id").Limit(50).All(&msg)
+
+	failOnError(err, "Unable to select from database")
+
+	defer session.Close()
+
+	return msg
+}
