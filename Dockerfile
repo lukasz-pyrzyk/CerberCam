@@ -1,7 +1,7 @@
 FROM golang
 
 # maintener info
-MAINTAINER Lukasz Pyrzyk <lukasz.pyrzyk@gmail.com>
+MAINTAINER Lukasz Pyrzyk <lukasz.pyrzyk@gmail.com>, Jakub Bentkowski <bentkowski.jakub@gmail.com>
 
 # copy all files
 COPY ./Src/Server /go/src/Cerber
