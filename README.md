@@ -24,7 +24,8 @@ CerberCam supports idea of entry commands. For now, there is only one:
 - RabbitMQ GO https://github.com/streadway/amqp
 - RabbitMQ docker image https://github.com/docker-library/rabbitmq
 - TensorFlow https://github.com/tensorflow/tensorflow
-- TensorFlow GO https://github.com/danieldk/tensorflow
+- TensorFlow GO https://github.com/tensorflow/tensorflow/tree/master/tensorflow/go
+- TensorFlow docker image https://github.com/tensorflow/tensorflow/tree/master/tensorflow/tools/docker
 - XUnit https://github.com/xunit/xunit
 
 ###Planned###
