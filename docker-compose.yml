@@ -11,6 +11,11 @@ MongoDB:
   volumes:
     - /srv/docker/mongodb:/var/lib/mongodb
   restart: always
+TensorFlow:
+  image: gcr.io/tensorflow/tensorflow
+  ports:
+    - "8888:8888"
+  restart: always
 CerberReceive:
   image: lukaszpyrzyk/cerbercam
   command: "-command=receive"
