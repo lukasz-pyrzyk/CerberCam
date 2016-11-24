@@ -1,7 +1,4 @@
-*/cmake_build_debug/**/*.*
-*/cmake_build_debug/**/
-Src/Server/ImageRecognizer/cmake_build_debug
-Src/Server/ImageRecognizer/cmake_build_debug/*
+Src/Server/ImageRecognizer/cmake-build-debug
 
 # Compiled Object files, Static and Dynamic libs (Shared Objects)
 *.o
