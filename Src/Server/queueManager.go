@@ -14,7 +14,7 @@ func closeQueue(queue amqp.Queue, channel *amqp.Channel, connection *amqp.Connec
 
 func openQueue(queueName string) (amqp.Queue, *amqp.Channel, *amqp.Connection) {
 
-	conn, err := amqp.Dial("amqp://guest:guest@cerbercam.cloudapp.net:5672/")
+	conn, err := amqp.Dial("amqp://guest:guest@cerber.cloudapp.net:5672/")
 	failOnError(err, "Failed to connect to RabbitMQ")
 
 	ch, err := conn.Channel()
