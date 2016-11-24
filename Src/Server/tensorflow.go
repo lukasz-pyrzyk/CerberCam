@@ -14,11 +14,13 @@ import (
 
 	"github.com/tensorflow/tensorflow/tensorflow/go"
 	"github.com/tensorflow/tensorflow/tensorflow/go/op"
+
+	_ "image/jpeg"
 )
 
 func recognize(msg Message, optionString string) {
 	options := new(tensorflow.SessionOptions)
-	options.Target = optionString
+	// options.Target = optionString // use local tensorflow
 
 	log.Info("Recognizing image...")
 	log.Info("Looking for model file...")
