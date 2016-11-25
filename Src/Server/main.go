@@ -15,10 +15,11 @@ var log = logging.MustGetLogger("logger")
 var GlobalConfig config
 
 func main() {
-	loadConfiguration()
-
 	command := flag.String("command", "", "a command to run")
+	configFile := flag.String("config", "config.yaml", "a configuration file to load")
 	flag.Parse()
+
+	loadConfiguration(*configFile)
 
 	switch *command {
 	case "receive":
@@ -36,10 +37,9 @@ func main() {
 	}
 }
 
-func loadConfiguration() {
-	fileName := "config.yaml"
-	log.Infof("Loading file from %s", fileName)
-	data, err := ioutil.ReadFile(fileName)
+func loadConfiguration(cfgFile string) {
+	log.Infof("Loading file from %s", cfgFile)
+	data, err := ioutil.ReadFile(cfgFile)
 	failOnError(err, "Cannot load configuration file")
 
 	yaml.Unmarshal(data, &GlobalConfig)
