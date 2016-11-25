@@ -9,8 +9,10 @@ func closeQueue(queue amqp.Queue, channel *amqp.Channel, connection *amqp.Connec
 }
 
 func openQueue(queueName string) (amqp.Queue, *amqp.Channel, *amqp.Connection) {
+	host := GlobalConfig.Queue.Host
 
-	conn, err := amqp.Dial(GlobalConfig.Queue.Host)
+	log.Debugf("Connecting to the queue %s", host)
+	conn, err := amqp.Dial(host)
 	failOnError(err, "Failed to connect to RabbitMQ")
 
 	ch, err := conn.Channel()
