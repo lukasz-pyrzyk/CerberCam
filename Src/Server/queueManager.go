@@ -2,6 +2,9 @@ package main
 
 import "github.com/streadway/amqp"
 
+type queueManager struct {
+}
+
 func closeQueue(queue amqp.Queue, channel *amqp.Channel, connection *amqp.Connection) {
 	log.Debugf("Closing queue '%s' and its connections...", queue.Name)
 	defer channel.Close()
@@ -32,7 +35,7 @@ func openQueue(queueName string) (amqp.Queue, *amqp.Channel, *amqp.Connection) {
 }
 
 // Send data to queue
-func Send(queueName string) {
+func (manager queueManager) Send(queueName string) {
 	q, ch, conn := openQueue(queueName)
 
 	log.Info("Sending message...")
@@ -55,7 +58,7 @@ func Send(queueName string) {
 }
 
 // Receive data from queue
-func Receive(queueName string) <-chan amqp.Delivery {
+func (manager queueManager) Receive(queueName string) <-chan amqp.Delivery {
 	q, ch, conn := openQueue(queueName)
 
 	msgs, err := ch.Consume(
