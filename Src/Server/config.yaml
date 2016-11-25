@@ -1,10 +1,10 @@
 tensorflow:
   modeldir: "model" # working directory for tensorflow
-  host: http://hostName:8888 
+  host: http://hostName.com:8888 
 mongo:
-  host: http://google.com:8888
+  host: http://hostname.com:8888
   database: cerberServer
-  MessagesTable: messages # todo
+  MessagesTable: messages
 queue:
   host: amqp://login:password@host:5672/
   topic: picturesQueue
