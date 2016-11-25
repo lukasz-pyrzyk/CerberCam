@@ -6,5 +6,5 @@ mongo:
   database: cerberServer
   MessagesTable: messages
 queue:
-  host: amqp://login:password@host:5672/
+  host: amqp://guest:guest@cerber.cloudapp.net:5672/
   topic: picturesQueue
