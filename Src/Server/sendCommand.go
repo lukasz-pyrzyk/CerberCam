@@ -6,6 +6,6 @@ func HandleSendCommand() {
 	msgs := ReceiveFromDatabase()
 	for _, msg := range msgs {
 		log.Infof("Received a message: %s", *msg.Email)
-		recognize(msg, "cerbercam.cloudapp.net:8888")
+		recognize(msg, GlobalConfig.Tensorflow.Host)
 	}
 }

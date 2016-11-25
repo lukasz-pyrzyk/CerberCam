@@ -2,19 +2,21 @@ package main
 
 import (
 	"flag"
+	"fmt"
+	"io/ioutil"
 	"time"
+
+	yaml "gopkg.in/yaml.v2"
 
 	"github.com/op/go-logging"
 )
 
 var log = logging.MustGetLogger("logger")
-var modeldir *string
-
-// CommandType - signature of command functions
-type CommandType func()
+var GlobalConfig config
 
 func main() {
-	modeldir = flag.String("dir", "", "Directory containing the trained model files. The directory will be created and the model downloaded into it if necessary")
+	loadConfiguration()
+
 	command := flag.String("command", "", "a command to run")
 	flag.Parse()
 
@@ -32,14 +34,26 @@ func main() {
 		log.Errorf("Invalid operation. Accepting: 'receive' or 'send', %s provided", *command)
 		flag.Usage()
 	}
+}
 
-	if *modeldir == "" {
-		log.Error("Invalid operation, model directory is not provided!")
-		flag.Usage()
+func loadConfiguration() {
+	fileName := "config.yaml"
+	log.Infof("Loading file from %s", fileName)
+	data, err := ioutil.ReadFile(fileName)
+	failOnError(err, "Cannot load configuration file")
+
+	yaml.Unmarshal(data, &GlobalConfig)
+	log.Info("Loading configuration complete")
+}
+
+func failOnError(err error, msg string) {
+	if err != nil {
+		log.Criticalf("%s: %s", msg, err)
+		panic(fmt.Sprintf("%s: %s", msg, err))
 	}
 }
 
-func mainLoop(cmd CommandType) {
+func mainLoop(cmd commandType) {
 	for {
 		cmd()
 		log.Debug("Thread sleep...")

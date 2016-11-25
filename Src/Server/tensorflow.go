@@ -26,7 +26,7 @@ func recognize(msg Message, optionString string) {
 	log.Info("Looking for model file...")
 
 	// Load the serialized GraphDef from a file.
-	modelfile, labelsfile, err := modelFiles(*modeldir)
+	modelfile, labelsfile, err := modelFiles(GlobalConfig.Tensorflow.ModelDir)
 	failOnError(err, "No model file in model directory")
 
 	log.Info("Loading model file...")
