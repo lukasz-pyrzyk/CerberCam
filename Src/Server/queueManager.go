@@ -1,10 +1,6 @@
 package main
 
-import (
-	"fmt"
-
-	"github.com/streadway/amqp"
-)
+import "github.com/streadway/amqp"
 
 func closeQueue(queue amqp.Queue, channel *amqp.Channel, connection *amqp.Connection) {
 	log.Debugf("Closing queue '%s' and its connections...", queue.Name)
@@ -13,8 +9,10 @@ func closeQueue(queue amqp.Queue, channel *amqp.Channel, connection *amqp.Connec
 }
 
 func openQueue(queueName string) (amqp.Queue, *amqp.Channel, *amqp.Connection) {
+	host := GlobalConfig.Queue.Host
 
-	conn, err := amqp.Dial("amqp://guest:guest@cerber.cloudapp.net:5672/")
+	log.Debugf("Connecting to the queue %s", host)
+	conn, err := amqp.Dial(host)
 	failOnError(err, "Failed to connect to RabbitMQ")
 
 	ch, err := conn.Channel()
@@ -74,11 +72,4 @@ func Receive(queueName string) <-chan amqp.Delivery {
 	defer closeQueue(q, ch, conn)
 
 	return msgs
-}
-
-func failOnError(err error, msg string) {
-	if err != nil {
-		log.Criticalf("%s: %s", msg, err)
-		panic(fmt.Sprintf("%s: %s", msg, err))
-	}
 }

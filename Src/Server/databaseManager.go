@@ -4,13 +4,13 @@ import "gopkg.in/mgo.v2"
 
 // InsertToDatabase - insert message to database
 func InsertToDatabase(msg *Message) {
-	session, err := mgo.Dial("MongoDB")
+	session, err := mgo.Dial(GlobalConfig.Mongo.Host)
 	failOnError(err, "Unable to connect to MongoDB")
 
 	// Optional. Switch the session to a monotonic behavior.
 	session.SetMode(mgo.Monotonic, true)
 
-	c := session.DB("cerberServer").C("messages")
+	c := session.DB(GlobalConfig.Mongo.Database).C(GlobalConfig.Mongo.MessagesTable)
 	err = c.Insert(msg)
 	failOnError(err, "Unable to insert to database")
 
@@ -19,7 +19,7 @@ func InsertToDatabase(msg *Message) {
 
 // ReceiveFromDatabase - Select messages from database
 func ReceiveFromDatabase() []Message {
-	session, err := mgo.Dial("cerbercam.cloudapp.net")
+	session, err := mgo.Dial(GlobalConfig.Mongo.Host)
 	failOnError(err, "Unable to connect to MongoDB")
 
 	// Optional. Switch the session to a monotonic behavior.
@@ -27,7 +27,7 @@ func ReceiveFromDatabase() []Message {
 
 	var msg []Message
 
-	c := session.DB("cerberServer").C("messages")
+	c := session.DB(GlobalConfig.Mongo.Database).C(GlobalConfig.Mongo.MessagesTable)
 	err = c.Find(nil).Sort("-_id").Limit(50).All(&msg)
 
 	failOnError(err, "Unable to select from database")
