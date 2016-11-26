@@ -17,7 +17,7 @@ type tensorflowConfig struct {
 }
 
 type mongoConfig struct {
-	Host          string
-	Database      string
-	MessagesTable string
+	Host     string
+	Database string
+	Table    string
 }

@@ -10,7 +10,7 @@ func InsertToDatabase(msg *Message) {
 	// Optional. Switch the session to a monotonic behavior.
 	session.SetMode(mgo.Monotonic, true)
 
-	c := session.DB(GlobalConfig.Mongo.Database).C(GlobalConfig.Mongo.MessagesTable)
+	c := session.DB(GlobalConfig.Mongo.Database).C(GlobalConfig.Mongo.Table)
 	err = c.Insert(msg)
 	failOnError(err, "Unable to insert to database")
 
@@ -27,7 +27,10 @@ func ReceiveFromDatabase() []Message {
 
 	var msg []Message
 
-	c := session.DB(GlobalConfig.Mongo.Database).C(GlobalConfig.Mongo.MessagesTable)
+	database := GlobalConfig.Mongo.Database
+	messages := GlobalConfig.Mongo.Table
+
+	c := session.DB(database).C(messages)
 	err = c.Find(nil).Sort("-_id").Limit(50).All(&msg)
 
 	failOnError(err, "Unable to select from database")

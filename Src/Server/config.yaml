@@ -4,7 +4,7 @@ tensorflow:
 mongo:
   host: http://hostname.com:8888
   database: cerberServer
-  MessagesTable: messages
+  table: messages
 queue:
   host: amqp://guest:guest@cerber.cloudapp.net:5672/
   topic: picturesQueue

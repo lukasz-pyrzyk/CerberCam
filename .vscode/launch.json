@@ -8,7 +8,7 @@
             "mode": "debug",
             "program": "${workspaceRoot}/Src/Server",
             "env": {},
-            "args": ["-command=receive"]
+            "args": ["-command=send","-config=../../../config.yaml"]
         }
     ]
 }

@@ -44,6 +44,8 @@ func recognize(msg Message, optionString string) {
 
 	log.Info("Starting new session...")
 
+	options = nil
+
 	// Create a session for inference over graph.
 	session, err := tensorflow.NewSession(graph, options)
 	failOnError(err, "Unable to start new tensorflow session")
