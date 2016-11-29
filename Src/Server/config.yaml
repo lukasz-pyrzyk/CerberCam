@@ -8,3 +8,8 @@ mongo:
 queue:
   host: amqp://login:password@host.com:5672/
   topic: picturesQueue
+email:
+  host: smtp.host.com
+  port: 587
+  login: login@host.com
+  password: password

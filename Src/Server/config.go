@@ -4,6 +4,7 @@ type config struct {
 	Tensorflow tensorflowConfig
 	Mongo      mongoConfig
 	Queue      queueConfig
+	Email      emailConfig
 }
 
 type queueConfig struct {
@@ -20,4 +21,11 @@ type mongoConfig struct {
 	Host     string
 	Database string
 	Table    string
+}
+
+type emailConfig struct {
+	Host     string
+	Port     int
+	Login    string
+	Password string
 }

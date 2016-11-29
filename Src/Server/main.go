@@ -12,7 +12,7 @@ import (
 )
 
 var log = logging.MustGetLogger("logger")
-var GlobalConfig config
+var GlobalConfig *config
 
 func main() {
 	command := flag.String("command", "", "a command to run")
@@ -29,6 +29,11 @@ func main() {
 	case "send":
 		log.Info("Sending started!")
 		mainLoop(HandleSendCommand)
+		//Send("alertsQueue")
+		break
+	case "sendEmail":
+		log.Info("Sending emails started!")
+		mainLoop(HandleSendEmail)
 		//Send("alertsQueue")
 		break
 	default:
