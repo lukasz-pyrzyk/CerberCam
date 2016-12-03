@@ -12,8 +12,16 @@ func (s serializer) Deserialize(body []byte) *Message {
 	msg := &Message{}
 	err := proto.Unmarshal(body, msg)
 
-	if err != nil {
-		log.Criticalf("%s: %s", msg, err)
-	}
+	failOnError(err, "Cannot deserialize protobuf object")
+
 	return msg
+}
+
+func (s serializer) Serialize(response *Response) (body []byte) {
+	log.Debugf("Deserializing message with %d bytes", len(body))
+	data, err := proto.Marshal(response)
+
+	failOnError(err, "Cannot serialize protobuf object")
+
+	return data
 }
