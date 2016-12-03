@@ -26,13 +26,12 @@ func (manager queueManager) Receive(queueName string) <-chan amqp.Delivery {
 }
 
 // Send data to queue
-func (manager queueManager) Send(queueName string) {
+func (manager queueManager) Send(queueName string, body *[]byte) {
 	q, ch, conn := openQueue(queueName)
 	defer closeQueue(q, ch, conn)
 
 	log.Info("Sending message...")
 
-	body := "ALERT"
 	err := ch.Publish(
 		"",     // exchange
 		q.Name, // routing key
@@ -40,7 +39,7 @@ func (manager queueManager) Send(queueName string) {
 		false,  // immediate
 		amqp.Publishing{
 			ContentType: "text/plain",
-			Body:        []byte(body),
+			Body:        *body,
 		})
 
 	failOnError(err, "Failed to publish a message")
