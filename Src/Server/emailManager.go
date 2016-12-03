@@ -7,10 +7,23 @@ import (
 )
 
 type emailManager struct {
+	Login    string
+	Password string
+	Host     string
+	Port     int
 }
 
-func (email emailManager) send(to string, subject string, content string) {
-	auth := smtp.PlainAuth("", GlobalConfig.Email.Login, GlobalConfig.Email.Password, GlobalConfig.Email.Host)
+func NewEmailManager() *emailManager {
+	manager := new(emailManager)
+	manager.Login = GlobalConfig.Email.Login
+	manager.Password = GlobalConfig.Email.Password
+	manager.Host = GlobalConfig.Email.Host
+	manager.Port = GlobalConfig.Email.Port
+	return manager
+}
+
+func (manager emailManager) send(to string, subject string, content string) {
+	auth := smtp.PlainAuth("", manager.Login, manager.Password, manager.Host)
 	recipients := []string{to}
 
 	message := fmt.Sprintf("To: %s \r\n"+
@@ -19,7 +32,7 @@ func (email emailManager) send(to string, subject string, content string) {
 		"%s \r\n", to, subject, content)
 
 	msg := []byte(message)
-	hostString := GlobalConfig.Email.Host + ":" + strconv.Itoa(GlobalConfig.Email.Port)
-	err := smtp.SendMail(hostString, auth, GlobalConfig.Email.Login, recipients, msg)
+	hostString := manager.Host + ":" + strconv.Itoa(manager.Port)
+	err := smtp.SendMail(hostString, auth, manager.Login, recipients, msg)
 	failOnError(err, "Cannot send email")
 }

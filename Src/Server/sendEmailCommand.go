@@ -4,6 +4,6 @@ package main
 func HandleSendEmail() {
 	log.Info("Checking for new data in emails queue...")
 
-	email := emailManager{}
+	email := NewEmailManager()
 	email.send("lukasz.pyrzyk@gmail.com", "topic!", "message")
 }
