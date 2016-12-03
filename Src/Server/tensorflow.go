@@ -18,7 +18,7 @@ import (
 	_ "image/jpeg"
 )
 
-func recognize(msg Message, optionString string) {
+func Recognize(msg *Message) (label string, probability float32) {
 	options := new(tensorflow.SessionOptions)
 	// options.Target = optionString // use local tensorflow
 
@@ -79,7 +79,8 @@ func recognize(msg Message, optionString string) {
 	// labels for each image in the "batch". The batch size was 1.
 	// Find the most probably label index.
 	probabilities := output[0].Value().([][]float32)[0]
-	printBestLabel(probabilities, labelsfile)
+	label, probability = calculateBestLabel(probabilities, labelsfile)
+	return
 }
 
 // Conver the image in filename to a Tensor suitable as input to the Inception model.
@@ -185,7 +186,7 @@ func constructGraphToNormalizeImage() (graph *tensorflow.Graph, input, output te
 	return graph, input, output, err
 }
 
-func printBestLabel(probabilities []float32, labelsFile string) {
+func calculateBestLabel(probabilities []float32, labelsFile string) (label string, probability float32) {
 	bestIdx := 0
 	for i, p := range probabilities {
 		if p > probabilities[bestIdx] {
@@ -207,7 +208,12 @@ func printBestLabel(probabilities []float32, labelsFile string) {
 	if err := scanner.Err(); err != nil {
 		log.Errorf("ERROR: failed to read %s: %v", labelsFile, err)
 	}
-	fmt.Printf("BEST MATCH: (%2.0f%% likely) %s\n", probabilities[bestIdx]*100.0, labels[bestIdx])
+
+	probability = probabilities[bestIdx] * 100.0
+	label = labels[bestIdx]
+	log.Infof("BEST MATCH: (%2.0f%% likely) %s\n", probability, label)
+
+	return
 }
 
 // TODO: refactor those methods
