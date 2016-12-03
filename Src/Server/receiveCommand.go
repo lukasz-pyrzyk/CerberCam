@@ -1,22 +1,26 @@
 package main
 
+import (
+	"github.com/golang/protobuf/proto"
+)
+
 // HandleReceiveCommand - handles getting data from queue and inserting to database
 func HandleReceiveCommand() {
 	log.Info("Checking for new data in queue...")
 
-	serializer := serializer{}
 	queue := queueManager{}
 	msgs := queue.Receive(GlobalConfig.Queue.Requests)
-	i := 0
 	for d := range msgs {
-		i++
-		log.Infof("Processing message %d", i)
-		msg := serializer.Deserialize(d.Body)
+
+		msg := &Message{}
+		err := proto.Unmarshal(d.Body, msg)
+		failOnError(err, "Cannot deserialize request message")
 		label, probability := Recognize(msg)
 		log.Infof("Tensorflow results: label - {s} (%d)", label, probability)
 
 		response := Response{msg.Email, &label, &probability, nil}
-		responsebytes := serializer.Serialize(&response)
+		responsebytes, err := proto.Marshal(&response)
+		failOnError(err, "Cannot serialize response message")
 		queue.Send(GlobalConfig.Queue.Responses, &responsebytes)
 	}
 }
