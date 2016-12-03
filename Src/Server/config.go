@@ -8,8 +8,9 @@ type config struct {
 }
 
 type queueConfig struct {
-	Host  string
-	Topic string
+	Host      string
+	Requests  string
+	Responses string
 }
 
 type tensorflowConfig struct {

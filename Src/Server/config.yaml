@@ -7,7 +7,8 @@ mongo:
   table: messages
 queue:
   host: amqp://login:password@host.com:5672/
-  topic: picturesQueue
+  requests: requests
+  responses: responses
 email:
   host: smtp.host.com
   port: 587
