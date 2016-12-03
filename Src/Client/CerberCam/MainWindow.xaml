@@ -7,6 +7,8 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
     <Grid>
-        <Button Command="{Binding SendCommand}" Width="100" Height="100" Content="Click to send"/>
+        <TextBox x:Name="EmailBox" Text="{Binding Email}" BorderBrush="Red" Width="300" Height="50" VerticalAlignment="Top" FontSize="20" TextAlignment="Center"/>
+        <Button Command="{Binding SendCommand}" Width="100" Height="100" Content="Take a picture and recognise!"/>
+
     </Grid>
 </Window>
