@@ -2,15 +2,6 @@
 // source: response.proto
 // DO NOT EDIT!
 
-/*
-Package main is a generated protocol buffer package.
-
-It is generated from these files:
-	response.proto
-
-It has these top-level messages:
-	Message
-*/
 package main
 
 import proto "github.com/golang/protobuf/proto"
@@ -20,28 +11,36 @@ import math "math"
 var _ = proto.Marshal
 var _ = math.Inf
 
-type Message struct {
-	Email            *string `protobuf:"bytes,1,req" json:"Email,omitempty"`
-	Content          *string `protobuf:"bytes,2,req" json:"Content,omitempty"`
-	XXX_unrecognized []byte  `json:"-"`
+type Response struct {
+	Email            *string  `protobuf:"bytes,1,req" json:"Email,omitempty"`
+	Label            *string  `protobuf:"bytes,2,req" json:"Label,omitempty"`
+	Probability      *float32 `protobuf:"fixed32,3,req" json:"Probability,omitempty"`
+	XXX_unrecognized []byte   `json:"-"`
 }
 
-func (m *Message) Reset()         { *m = Message{} }
-func (m *Message) String() string { return proto.CompactTextString(m) }
-func (*Message) ProtoMessage()    {}
+func (m *Response) Reset()         { *m = Response{} }
+func (m *Response) String() string { return proto.CompactTextString(m) }
+func (*Response) ProtoMessage()    {}
 
-func (m *Message) GetEmail() string {
+func (m *Response) GetEmail() string {
 	if m != nil && m.Email != nil {
 		return *m.Email
 	}
 	return ""
 }
 
-func (m *Message) GetContent() string {
-	if m != nil && m.Content != nil {
-		return *m.Content
+func (m *Response) GetLabel() string {
+	if m != nil && m.Label != nil {
+		return *m.Label
 	}
 	return ""
+}
+
+func (m *Response) GetProbability() float32 {
+	if m != nil && m.Probability != nil {
+		return *m.Probability
+	}
+	return 0
 }
 
 func init() {
