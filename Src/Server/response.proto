@@ -1,0 +1,5 @@
+option go_package = "main";
+message Message {
+  required string Email = 1;
+  required string Content = 2;
+}
