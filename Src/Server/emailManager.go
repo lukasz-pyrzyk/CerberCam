@@ -22,7 +22,7 @@ func NewEmailManager() *emailManager {
 	return manager
 }
 
-func (manager emailManager) send(to string, subject string, content string) {
+func (manager emailManager) Send(to string, subject string, content string) {
 	auth := smtp.PlainAuth("", manager.Login, manager.Password, manager.Host)
 	recipients := []string{to}
 

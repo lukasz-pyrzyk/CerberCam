@@ -7,6 +7,7 @@ Package main is a generated protocol buffer package.
 
 It is generated from these files:
 	message.proto
+	response.proto
 
 It has these top-level messages:
 	Message
@@ -14,30 +15,21 @@ It has these top-level messages:
 package main
 
 import proto "github.com/golang/protobuf/proto"
-import fmt "fmt"
 import math "math"
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
-var _ = fmt.Errorf
 var _ = math.Inf
 
-// This is a compile-time assertion to ensure that this generated file
-// is compatible with the proto package it is being compiled against.
-// A compilation error at this line likely means your copy of the
-// proto package needs to be updated.
-const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
-
 type Message struct {
-	Email            *string `protobuf:"bytes,1,req,name=Email" json:"Email,omitempty"`
-	Photo            []byte  `protobuf:"bytes,2,req,name=Photo" json:"Photo,omitempty"`
+	Email            *string `protobuf:"bytes,1,req" json:"Email,omitempty"`
+	Photo            []byte  `protobuf:"bytes,2,req" json:"Photo,omitempty"`
 	XXX_unrecognized []byte  `json:"-"`
 }
 
-func (m *Message) Reset()                    { *m = Message{} }
-func (m *Message) String() string            { return proto.CompactTextString(m) }
-func (*Message) ProtoMessage()               {}
-func (*Message) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{0} }
+func (m *Message) Reset()         { *m = Message{} }
+func (m *Message) String() string { return proto.CompactTextString(m) }
+func (*Message) ProtoMessage()    {}
 
 func (m *Message) GetEmail() string {
 	if m != nil && m.Email != nil {
@@ -54,17 +46,4 @@ func (m *Message) GetPhoto() []byte {
 }
 
 func init() {
-	proto.RegisterType((*Message)(nil), "Message")
-}
-
-func init() { proto.RegisterFile("message.proto", fileDescriptor0) }
-
-var fileDescriptor0 = []byte{
-	// 82 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x09, 0x6e, 0x88, 0x02, 0xff, 0xe2, 0xe2, 0xcd, 0x4d, 0x2d, 0x2e,
-	0x4e, 0x4c, 0x4f, 0xd5, 0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x57, 0x52, 0xe7, 0x62, 0xf7, 0x85, 0x08,
-	0x08, 0xf1, 0x72, 0xb1, 0xba, 0xe6, 0x26, 0x66, 0xe6, 0x48, 0x30, 0x2a, 0x30, 0x69, 0x70, 0x82,
-	0xb8, 0x01, 0x19, 0xf9, 0x25, 0xf9, 0x12, 0x4c, 0x0a, 0x4c, 0x1a, 0x3c, 0x4e, 0x6c, 0x51, 0x2c,
-	0xb9, 0x89, 0x99, 0x79, 0x80, 0x00, 0x00, 0x00, 0xff, 0xff, 0x6e, 0x9f, 0x70, 0x16, 0x40, 0x00,
-	0x00, 0x00,
 }

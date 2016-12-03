@@ -34,7 +34,6 @@ func main() {
 	case "sendEmail":
 		log.Info("Sending emails started!")
 		mainLoop(HandleSendEmail)
-		//Send("alertsQueue")
 		break
 	default:
 		log.Errorf("Invalid operation. Accepting: 'receive' or 'send', %s provided", *command)
