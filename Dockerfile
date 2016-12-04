@@ -19,7 +19,7 @@ RUN add-apt-repository ppa:maarten-fonville/protobuf
 RUN apt-get update && apt-get install -y --allow-unauthenticated protobuf-compiler python-protobuf
 
 # Generate Tensorflow go bindings
-RUN go generate -v -x github.com/tensorflow/tensorflow/tensorflow/go/op
+RUN go get github.com/tensorflow/tensorflow/tensorflow/go/op & go generate -v -x github.com/tensorflow/tensorflow/tensorflow/go/op
 
 # Install Cerber
 RUN go install Cerber
