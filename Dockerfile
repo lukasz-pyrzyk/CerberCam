@@ -1,4 +1,4 @@
-FROM bentou/tensorflowgo
+FROM bentou/tensorflowgo:latest
 
 # "Design software to be easy to use correctly and hard to use incorrectly"
 
