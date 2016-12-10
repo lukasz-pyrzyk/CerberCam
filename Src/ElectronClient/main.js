@@ -3,6 +3,8 @@ const cfgLoader = require('./configuration')
 const queueManager = require('./queue')
 const proto = require('./messages')
 
+const sendCommand = require('./commands/send')
+
 // Module to control application life.
 const app = electron.app
 
@@ -75,5 +77,5 @@ app.on('activate', function () {
 
 ipc.on("newRequest", (evt, data) => {
     console.log("got it!")
-    console.log(data)
+    sendCommand.sendPhoto(cfg, data)
 });
