@@ -1,5 +1,6 @@
 const electron = require('electron')
 const cfgLoader = require('./configuration')
+const queueManager = require('./queue')
 
 // Module to control application life.
 const app = electron.app
@@ -28,7 +29,8 @@ function createWindow () {
   // Open the DevTools.
   mainWindow.webContents.openDevTools()
 
-  cfg = cfgLoader.load("../config.yaml");
+  cfg = cfgLoader.load("../../..//config.yaml");
+  queueManager.send(cfg.queue)
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {
