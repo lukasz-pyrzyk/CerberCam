@@ -1,10 +1,9 @@
 const rabbitmq = require('../queue')
-const proto = require('../messages')
-const protobuf = require('protocol-buffers')
+const proto = require('../modules/proto')
 
 module.exports = {
     sendPhoto: function(cfg, msg) {
-        var protoMessage = proto.createFrom(msg);
+        var protoMessage = proto.createFromModel(msg);
         rabbitmq.send(cfg.queue, protoMessage)
     }
 }

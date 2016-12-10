@@ -8,8 +8,8 @@ document.getElementById("send").addEventListener('click', _ => {
 
     var buffer = new Buffer("lorem ipsum") // TODO: Jakub, get bytes from user's photo
     var msg = {
-        email: email,
-        photo: buffer
+        Email: email,
+        Photo: buffer
     }
 
     ipc.send('newRequest', msg);

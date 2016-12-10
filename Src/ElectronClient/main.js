@@ -1,7 +1,5 @@
 const electron = require('electron')
 const cfgLoader = require('./configuration')
-const queueManager = require('./queue')
-const proto = require('./messages')
 
 const sendCommand = require('./commands/send')
 
