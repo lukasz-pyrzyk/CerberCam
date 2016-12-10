@@ -5,6 +5,9 @@ const proto = require('./messages')
 
 // Module to control application life.
 const app = electron.app
+
+const ipc = electron.ipcMain
+
 // Module to create native browser window.
 const BrowserWindow = electron.BrowserWindow
 
@@ -31,8 +34,8 @@ function createWindow () {
   mainWindow.webContents.openDevTools()
 
   cfg = cfgLoader.load("../../..//config.yaml");
-  var buffer = proto.createDummyMessage();
-  queueManager.send(cfg.queue, buffer)
+  // var buffer = proto.createDummyMessage();
+  //queueManager.send(cfg.queue, buffer)
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {
@@ -42,6 +45,8 @@ function createWindow () {
     mainWindow = null
   })
 }
+
+
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
@@ -67,3 +72,8 @@ app.on('activate', function () {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.p
+
+ipc.on("newRequest", (evt, data) => {
+    console.log("got it!")
+    console.log(data)
+});
