@@ -16,7 +16,7 @@ var GlobalConfig *config
 
 func main() {
 	command := flag.String("command", "", "a command to run")
-	configFile := flag.String("config", "config.yaml", "a configuration file to load")
+	configFile := flag.String("config", "", "a configuration file to load")
 	flag.Parse()
 
 	loadConfiguration(*configFile)
