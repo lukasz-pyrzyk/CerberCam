@@ -1,4 +1,6 @@
 const electron = require('electron')
+const cfgLoader = require('./configuration')
+
 // Module to control application life.
 const app = electron.app
 // Module to create native browser window.
@@ -7,10 +9,11 @@ const BrowserWindow = electron.BrowserWindow
 const path = require('path')
 const url = require('url')
 
+let cfg // configuration for app
+
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
-
 function createWindow () {
   // Create the browser window.
   mainWindow = new BrowserWindow({width: 800, height: 600})
@@ -25,15 +28,7 @@ function createWindow () {
   // Open the DevTools.
   mainWindow.webContents.openDevTools()
 
-  yaml = require('js-yaml');
-  fs   = require('fs');
-
-  try {
-  var configuration = yaml.safeLoad(fs.readFileSync('../config.yaml', 'utf8'));
-  console.log(configuration);
-} catch (e) {
-  console.log(e);
-}
+  cfg = cfgLoader.load("../config.yaml");
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {
