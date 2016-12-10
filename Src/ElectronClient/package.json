@@ -15,6 +15,7 @@
     "js-yaml": "3.7.0"
   },
   "dependencies": {
+    "protocol-buffers": "3.2.1",
     "amqplib": "^0.5.1"
   }
 }
