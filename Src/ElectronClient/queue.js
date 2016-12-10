@@ -16,7 +16,7 @@ module.exports = {
                 console.log("Selected queue %s", q)
 
                 ch.assertQueue(q, {durable: false});
-                ch.sendToQueue(q, new Buffer('Hello World!'));
+                ch.sendToQueue(q, msg);
                 console.log("Message has been sent");
             });
         });

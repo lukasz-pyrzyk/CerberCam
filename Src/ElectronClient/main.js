@@ -1,6 +1,7 @@
 const electron = require('electron')
 const cfgLoader = require('./configuration')
 const queueManager = require('./queue')
+const proto = require('./messages')
 
 // Module to control application life.
 const app = electron.app
@@ -30,7 +31,8 @@ function createWindow () {
   mainWindow.webContents.openDevTools()
 
   cfg = cfgLoader.load("../../..//config.yaml");
-  queueManager.send(cfg.queue)
+  var buffer = proto.createDummyMessage();
+  queueManager.send(cfg.queue, buffer)
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {
