@@ -1,6 +1,5 @@
 const electron = require('electron')
 const cfgLoader = require('./configuration')
-
 const sendCommand = require('./commands/send')
 
 // Module to control application life.
@@ -33,9 +32,7 @@ function createWindow () {
   // Open the DevTools.
   mainWindow.webContents.openDevTools()
 
-  cfg = cfgLoader.load("../../..//config.yaml");
-  // var buffer = proto.createDummyMessage();
-  //queueManager.send(cfg.queue, buffer)
+  cfg = cfgLoader.load('../../..//config.yaml');
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {
@@ -45,8 +42,6 @@ function createWindow () {
     mainWindow = null
   })
 }
-
-
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
@@ -70,10 +65,10 @@ app.on('activate', function () {
   }
 })
 
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and require them here.p
 
-ipc.on("newRequest", (evt, data) => {
-    console.log("got it!")
+ipc.on('newRequest', (evt, data) => {
+    console.log('Received new request from renderer')
     sendCommand.sendPhoto(cfg, data)
+    console.log('Request has been send to the server')
+    mainWindow.webContents.send('sendingFinished', true)
 });

@@ -1,4 +1,4 @@
-const rabbitmq = require('../queue')
+const rabbitmq = require('../modules/queue')
 const proto = require('../modules/proto')
 
 module.exports = {
