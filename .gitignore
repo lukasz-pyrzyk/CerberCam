@@ -297,3 +297,7 @@ __pycache__/
 
 # Cake - Uncomment if you are using it
 # tools/
+
+# - NodeJS elements
+node_modules/
+*.lock
