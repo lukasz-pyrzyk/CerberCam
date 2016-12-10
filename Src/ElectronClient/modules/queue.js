@@ -3,21 +3,21 @@ module.exports = {
         var amqp = require('amqplib/callback_api');
         var protobuf = require('protocol-buffers')
 
-        console.log("connecting to the queue %s", config.host)
+        console.log('connecting to the queue %s', config.host)
         amqp.connect(config.host, function(err, conn) {
             if(err != null) console.log(err)
-            else console.log("Connected successfully")
+            else console.log('Connected successfully')
 
             conn.createChannel(function(err, ch) {
                 if(err != null) console.log(err)
-                else console.log("Channel selected successfully")
+                else console.log('Channel selected successfully')
 
                 var q = config.requests;
-                console.log("Selected queue %s", q)
+                console.log('Selected queue %s', q)
 
                 ch.assertQueue(q, {durable: false});
                 ch.sendToQueue(q, msg);
-                console.log("Message has been sent");
+                console.log('Message has been sent');
             });
         });
     }
