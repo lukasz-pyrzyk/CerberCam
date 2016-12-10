@@ -13,5 +13,8 @@
   "devDependencies": {
     "electron": "^1.4.1",
     "js-yaml": "3.7.0"
+  },
+  "dependencies": {
+    "amqplib": "^0.5.1"
   }
 }
