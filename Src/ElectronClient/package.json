@@ -1,0 +1,16 @@
+{
+  "name": "CerberCam",
+  "version": "1.0.0",
+  "description": "Desktop client for the CerberCam",
+  "main": "main.js",
+  "keywords": [],
+  "author": "Łukasz Pyrzyk, Jakub Bentkowski",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": "https://github.com/lukasz-pyrzyk/CerberCam",
+  "devDependencies": {
+    "electron": "^1.4.1"
+  }
+}
