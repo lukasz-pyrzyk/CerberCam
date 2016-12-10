@@ -25,6 +25,16 @@ function createWindow () {
   // Open the DevTools.
   mainWindow.webContents.openDevTools()
 
+  yaml = require('js-yaml');
+  fs   = require('fs');
+
+  try {
+  var configuration = yaml.safeLoad(fs.readFileSync('../config.yaml', 'utf8'));
+  console.log(configuration);
+} catch (e) {
+  console.log(e);
+}
+
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {
     // Dereference the window object, usually you would store windows

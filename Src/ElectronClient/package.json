@@ -11,6 +11,7 @@
   },
   "repository": "https://github.com/lukasz-pyrzyk/CerberCam",
   "devDependencies": {
-    "electron": "^1.4.1"
+    "electron": "^1.4.1",
+    "js-yaml": "3.7.0"
   }
 }
