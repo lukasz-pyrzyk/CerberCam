@@ -1,3 +1,7 @@
+section#cameraBox {
+    text-align: center;
+}
+
 @media (max-width: 768px) {
     .navbar-header {
         float: left;
@@ -172,5 +176,5 @@
     }
     .navbar-text.navbar-right:last-child {
         margin-right: 0;
-    } 
+    }
 }
