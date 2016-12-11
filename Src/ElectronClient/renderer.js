@@ -6,12 +6,6 @@ const ipc = electron.ipcRenderer;
 var fileName
 var lastMessage
 
-function loadPage(page) {
-    $("#main-content").load(page)
-}
-
-loadPage("welcome.html")
-
 document.getElementById('selectFile').addEventListener('click', _ => {
     dialogOptions = {
         filters: [
