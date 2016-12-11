@@ -14,31 +14,27 @@
 
     <!-- Stylesheets -->
     <link rel="stylesheet" href="css/photon.min.css">
-    <link rel="stylesheet" href="node_modules/dropzone/dist/basic.css">
-    <link rel="stylesheet" href="node_modules/dropzone/dist/dropzone.css">
-    <script src="node_modules/dropzone/dist/dropzone.js"></script>
   </head>
   <body>
     <div class="center-block">
       <h1 class="center-block text-center">Cerber Cam</h1>
     </div>
-    <form id="my-awesome-dropzone" action="/target" class="dropzone"></form>
 
     <div class="center-block">
       <!--<button class="btn btn-primary" id="send">Send</button>-->
     </div>
-    <script>require('./renderer.js')</script>
+    
 
     <footer class="toolbar toolbar-footer">
       <div class="toolbar-actions">
-
         <input type="email" placeholder="Enter your email address" id="email" />
-        
+        <button type="button" id="selectFile">Select file</button>
         <button class="btn btn-primary pull-right" id="send">
           Send
         </button>
+
       </div>
     </footer>
-
+  <script>require('./renderer.js')</script>
   </body>
 </html>
