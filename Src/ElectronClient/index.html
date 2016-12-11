@@ -14,6 +14,7 @@
 
     <!-- Stylesheets -->
     <link rel="stylesheet" href="css/photon.min.css">
+
   </head>
   <body>
     <div class="center-block">
@@ -23,8 +24,6 @@
     <div class="center-block">
       <!--<button class="btn btn-primary" id="send">Send</button>-->
     </div>
-    
-
     <footer class="toolbar toolbar-footer">
       <div class="toolbar-actions">
         <input type="email" placeholder="Enter your email address" id="email" />
@@ -32,9 +31,10 @@
         <button class="btn btn-primary pull-right" id="send">
           Send
         </button>
-
       </div>
     </footer>
+  <video id="camera" autoplay> </video>
   <script>require('./renderer.js')</script>
+  <script>require('./camera.js')</script>
   </body>
 </html>
