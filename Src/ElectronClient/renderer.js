@@ -6,6 +6,12 @@ const ipc = electron.ipcRenderer;
 var fileName
 var lastMessage
 
+function loadPage(page) {
+    $("#main-content").load(page)
+}
+
+loadPage("welcome.html")
+
 document.getElementById('selectFile').addEventListener('click', _ => {
     dialogOptions = {
         filters: [
@@ -25,7 +31,7 @@ document.getElementById('selectFile').addEventListener('click', _ => {
 })
 
 document.getElementById('send').addEventListener('click', _ => {
-    var email = document.getElementById('email').value
+    var email = electron.remote.getGlobal('user').email;
     console.log('Clicked \'start\' button, sending data through the ipc')
 
     var buffer = fs.readFileSync(fileName)

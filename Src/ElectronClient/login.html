@@ -1,0 +1,24 @@
+<div class="container">
+  <div class="jumbotron">
+    <h1>Login to CerberCam</h1> 
+	<input type="email" placeholder="Enter your email address" id="email" /> 
+  	<p><a id="go-to-main" class="btn btn-primary btn-lg" href="#" role="button">Continue</a></p>
+  </div>
+</div>
+<script>
+	const electron = require('electron')
+
+    function loadPage(page) {
+        $("#main-content").load(page)
+    }
+
+    $("#go-to-main").on("click", function(){
+    	var email = document.getElementById('email').value
+		if(email) {
+			electron.remote.getGlobal('user').email = email;
+        	loadPage("main.html")
+		} else {
+			alert("Enter email address!")
+		}
+    })
+</script>
