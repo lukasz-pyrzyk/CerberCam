@@ -6,6 +6,10 @@ const ipc = electron.ipcRenderer;
 var fileName
 var lastMessage
 
+function loadPage(page) {
+    $("#main-content").load(page)
+}
+
 document.getElementById('selectFile').addEventListener('click', _ => {
     dialogOptions = {
         filters: [
@@ -38,6 +42,12 @@ document.getElementById('send').addEventListener('click', _ => {
     lastMessage = msg
 
     ipc.send('newRequest', msg);
+})
+
+document.getElementById('logout').addEventListener('click', _ => {
+    console.log('Logging out...')
+    electron.remote.getGlobal('user').email = '';
+    loadPage("welcome.html")
 })
 
 ipc.on("sendingFinished", (handler, data) => {
