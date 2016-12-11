@@ -9,20 +9,22 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
     <!-- Stylesheets -->
-    <link rel="stylesheet" href="css/photon.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/photon.min.css">
     <link rel="stylesheet" href="css/main.css">
 
   </head>
   <body>
-    <div class="center-block">
-      <h1 class="center-block text-center">Cerber Cam</h1>
-    </div>
-
-
-  <div id="main-content"></iframe>
-
-  <script>require('./index.js')</script>
+    <header class="toolbar toolbar-header dragable">
+    <!--<div class="center-block">-->
+      <h4 class="navbar-brand header-title">Cerber Cam</h4>
+      <button id="close-button" class="btn btn-default navbar-btn pull-right">x</button>
+    </header>
+    <div id="main-content"></div>
+    <footer class="toolbar toolbar-footer authors">
+      <h1 class="title">by Łukasz Pyrzyk and Jakub Bentkowski &#169;2016</h1>
+    </footer>
+    <script>require('./index.js')</script>
   </body>
 </html>

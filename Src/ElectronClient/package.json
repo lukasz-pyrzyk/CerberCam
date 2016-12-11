@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "protocol-buffers": "3.2.1",
-    "amqplib": "^0.5.1"
+    "amqplib": "^0.5.1",
+    "electron-settings":"2.2.2"
   }
 }

@@ -11,3 +11,8 @@ function loadPage(page) {
 }
 
 loadPage("welcome.html")
+
+$("#close-button").on('click', function() {
+    var window = electron.remote.getCurrentWindow();
+    window.close();
+})

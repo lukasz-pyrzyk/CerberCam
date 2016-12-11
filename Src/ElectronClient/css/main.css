@@ -2,6 +2,31 @@ section#cameraBox {
     text-align: center;
 }
 
+.header-title {
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+#close-button {
+    margin: 10px;
+}
+
+.dragable {
+    -webkit-app-region: drag
+}
+
+.authors {
+    position:fixed;
+    bottom:0;
+    margin:auto;
+    width:100%;
+    padding-top:3px;
+}
+
+button {
+  -webkit-app-region: no-drag;
+}
+
 @media (max-width: 768px) {
     .navbar-header {
         float: left;
