@@ -45,3 +45,13 @@ ipc.on("sendingFinished", (handler, data) => {
     if(lastMessage != null)
         new Notification("Image has been sent!", { body: "to email : " + lastMessage.Email, icon : lastMessage.Filename });
 })
+
+document.ondragover = document.ondrop = (ev) => {
+  ev.preventDefault()
+}
+
+document.body.ondrop = (ev) => {
+  console.log(ev.dataTransfer.files[0].path)
+  fileName = ev.dataTransfer.files[0].path
+  ev.preventDefault()
+}
