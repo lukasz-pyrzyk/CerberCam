@@ -68,7 +68,8 @@ app.on('activate', function () {
 
 ipc.on('newRequest', (evt, data) => {
     console.log('Received new request from renderer')
+    console.log('Request mail ' + data.Email + ' file ' + data.Filename)
     sendCommand.sendPhoto(cfg, data)
     console.log('Request has been send to the server')
-    mainWindow.webContents.send('sendingFinished', true)
+    mainWindow.webContents.send('sendingFinished', data)
 });

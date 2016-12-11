@@ -4,6 +4,7 @@ const fs = require('fs');
 
 const ipc = electron.ipcRenderer;
 var fileName
+var lastMessage
 
 document.getElementById('selectFile').addEventListener('click', _ => {
     dialogOptions = {
@@ -30,12 +31,17 @@ document.getElementById('send').addEventListener('click', _ => {
     var buffer = fs.readFileSync(fileName)
     var msg = {
         Email: email,
-        Photo: buffer
+        Photo: buffer,
+        Filename: fileName
     }
+
+    lastMessage = msg
 
     ipc.send('newRequest', msg);
 })
 
 ipc.on("sendingFinished", (handler, data) => {
     console.log("Request has been send")
+    if(lastMessage != null)
+        new Notification("Image has been sent!", { body: "to email : " + lastMessage.Email, icon : lastMessage.Filename });
 })
