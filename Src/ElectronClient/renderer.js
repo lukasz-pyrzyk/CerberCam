@@ -39,14 +39,16 @@ $("#capture").on('click', function() {
   vid.pause();
   ctx.drawImage(vid, 0, 0, vid.videoHeight, vid.videoHeight);
 
-  var imageData = ctx.getImageData(0, 0, vid.videoHeight, vid.videoWidth);
-  var arrayBuffer = imageData.data.buffer;  // ArrayBuffer
-  var byteArray = new Uint8Array(arrayBuffer)
+  canvas.toBlob(function(blob){
+    var reader = new FileReader()
+    reader.onload = function(){
+        var buffer = new Buffer(reader.result)
+        var msg = prepareMessage(buffer, "capture.jpg");
+        ipc.send('newRequest', msg);
+    }
+    reader.readAsArrayBuffer(blob)
+  }, "image/jpeg", 1);
 
-  var msg = prepareMessage(byteArray, "capture.jpg");
-  
-  console.log("Sending captured frame through the ipc");
-  ipc.send('newRequest', msg);
   vid.play();
 })
 
