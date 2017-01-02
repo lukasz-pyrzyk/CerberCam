@@ -25,7 +25,10 @@ document.getElementById('selectFile').addEventListener('click', _ => {
         fileName = data[0]
         console.log(fileName)
     })
+})
 
+$("#capture").on('click', function() {
+  alert('Capture button was clicked!');
 })
 
 document.getElementById('send').addEventListener('click', _ => {
