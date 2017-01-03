@@ -19,6 +19,14 @@ Klientem jest aplikacja desktopowa napisała w technologii JavaScript/HTML opart
 
 Z uwagi na wysokie wymagania wydajnościowe, komunikacja odbywa się za pomocą TCP/IP za pomocą własnego protokołu.
 
+Część serwerowa to dwa mikroserwisy odpowiadające za analizę zdjęcia oraz przetwarzanie informacji zwrotnej do użytkownika.
+
+
+## 4. Komunikacja i struktury danych
+
+Aby zagwarantować wysoką skalowalność aplikacji, do komunikacji zostały wykorzystane system kolejkowania wiadomości - ``RabbitMQ``. Jest to open-sourcowy projekt pozwalający na tworzenie wydajnych systemów opratych o asynchroniczne wiadomości. 
+
+
 W aplikacji wyróżniamy dwa rodzaje komunikatów:
 * wiadomość (message)
 * odpowiedź (response)
@@ -48,24 +56,107 @@ type Message struct {
 }
 ```
 
+# 6. Serwer
+Z uwagi na preferencje takie jak statyczne typowanie, kompilacjedo kodu natywnego czy wysoką wydajność, aplikacja serwerowa została napisana w języku ``Go``, potocznie zwanym ``Golang``.
+Jest to nowoczesny język programowania stworzony i aktywnie używany przez ``Google``. 
+Aplikacja działa dwóch trybach, które uruchomione osobno tworzą dwa mikroserwisy.
+* Receive - przetwarzanie danych
+* SendEmail - przetwarzanie odpowiedzi i alertów
 
-
-
-
-## Uruchomienie serwera
-CerberCam wymaga wystartowania dwóch usług - Receive oraz SendEmail. Są to dwa mikroserwisy.
-
-#### Uruchomienie silnika do analizy zdjęć
+Uruchomienie tychże usług wygląda następująco:
 ```go
 go run *.go -command=receive -config=../../../config.yaml
 ```
-#### Uruchomienie wysyłania emaili
 ```go
 go run *.go -command=sendEmail -config=../../../config.yaml
 ```
 
+Aby zapewnić swobodną konfigurację, użyty został format ``YAML``, czyli ``Yet another markup language``.
+Przykładowy plik konfiguracyjny wygląda następująco:
+
+```yaml
+tensorflow:
+  modeldir: "model" # working directory for tensorflow
+  host: http://hostName.com:8888 
+queue:
+  host: amqp://login:password@host.com:5672/
+  requests: requests
+  responses: responses
+email:
+  host: smtp.host.com
+  port: 587
+  login: login@host.com
+  password: password
+```
+
+Taki format jest zgodny ze strukturą
+```
+type config struct {
+	Tensorflow tensorflowConfig
+	Queue      queueConfig
+	Email      emailConfig
+}
+
+type queueConfig struct {
+	Host      string
+	Requests  string
+	Responses string
+}
+
+type tensorflowConfig struct {
+	ModelDir string
+	Host     string
+}
+
+type emailConfig struct {
+	Host     string
+	Port     int
+	Login    string
+	Password string
+}
+```
+W celu zagwarantowania dostępności, każdy z mikroserwisów pracuje w pętli głównej o czasie 1000ms.
+
+### Receive
+Jest to komenda która odpytuje kolekję o nowe wiadomości. 
+Kiedy takowa się pojawi, zostaje pobrana i oznaczona jako gotowa do przetworzenia.
+Następnym z kroków jest deserializacja wiadomości z tablicy bajtów zserializowanych przez Protobuf do struktury danych. 
+Wykorzystuje się do tego nastąpujący fragment kodu:
+```
+msg := &Message{}
+err := proto.Unmarshal(d.Body, msg)
+```
+Po deserializacji, wiadomość ``msg`` zostaje przesłana do silnika analizy obrazów - ``Tensorflow``.
+W momencie udanej analizy, komenda wysyła ponownie serializuje dane i wysyła resultat do następnej kolejki danych w celu odesłania jej użytkownikowi, np. za pomocą maila lub SMSa.
+
+
+### SendEmail
+W porównaniu do poprzedniej komendy, ta jest stosunkowo prosta.
+Pobiera one nowe wiadomości do opublikowania do użytkowników i wysyła je poprzez protokuł SMTP.
+
+Cała komenda wygląda następująco:
+```
+func HandleSendEmail() {
+	log.Info("Checking for new data in emails queue...")
+
+	emailManager := NewEmailManager()
+	queue := queueManager{}
+	msgs := queue.Receive(GlobalConfig.Queue.Responses)
+	for d := range msgs {
+
+		msg := &Response{}
+		err := proto.Unmarshal(d.Body, msg)
+		failOnError(err, "Cannot deserialize response")
+
+		content := fmt.Sprintf("Cerber believes that your picture shows %s (probability %f%%)", *msg.Label, *msg.Probability)
+		emailManager.Send(*msg.Email, "Reconginion results", content)
+	}
+}
+```
+
+## 7. Silnik analizy - Tensorflow
+
+
 // TODO:
-* opis projektu
 * opis technologii (docker, go)
 * opis tensorflowa
-* opis klienta
