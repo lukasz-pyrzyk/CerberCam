@@ -56,6 +56,13 @@ type Message struct {
 }
 ```
 
+W celu skompilowania plików ``Proto`` do modeli dla wybranego języka programowania należy wykonać polecenie
+```bash
+protoc --go_out=. *.proto
+``` 
+
+
+
 # 6. Serwer
 Z uwagi na preferencje takie jak statyczne typowanie, kompilacjedo kodu natywnego czy wysoką wydajność, aplikacja serwerowa została napisana w języku ``Go``, potocznie zwanym ``Golang``.
 Jest to nowoczesny język programowania stworzony i aktywnie używany przez ``Google``. 
