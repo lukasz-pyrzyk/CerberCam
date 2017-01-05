@@ -155,8 +155,71 @@ func HandleSendEmail() {
 ```
 
 ## 7. Silnik analizy - Tensorflow
+Tensorflow jest to silnik ``machine learning`` stworzony przez ``Google``. Jego kod jest dostępny publicznie pod adresem github.com/tensorflow/tensorflow. Jest on powszechnie używany przez kilka znanych usług giganta z Mountan View, takich jak Google Photos, analizie mowy, rozpoznawaniu obrazów czy też pisma odręcznego. Udostępniona przez Google biblioteka pozwala na zaawansowane obliczenia numeryczne z wykorzystaniem grafów. Współpracuje ona z klastrami superkomputerów jak i pojedyńczą instancją uruchomioną na dowolnej stacji roboczej czy telefonie z systemem Android. Aby uruchomić Tensorflow lokalnie, potrzebny jest komputer z systemem Linux lub MacOS. Co warte podkreślenia, Tensorflow pozwala na zrównoleglenie operacji poprzez używanie procesorów z kart graficznych NVIDII obsługujących framework CUDA.
+
+## 8. Współpraca Tensorflow z CerberCam
+W celu zintegrowania Tensorflow musieliśmy wykonać kilka zaawansowanych zadań, między innymi skompilować cały projekt lokalnie.
+Pierwszym z nich było pobranie biblioteki pozwalającej na wygenerowanie wrappera pomiędzy językiem C a Go.
+```bash
+go get -d github.com/tensorflow/tensorflow/tensorflow/go
+```
+
+Aby skompilować projekt, należy upewnić się, że posiadamy narzędzie ``Bazel``, czyli zbiór bibliotek i procesów pozwalających na kompilowanie dużych projektów. W przypadku Ubuntu 15.10 (Willy) należy wykonać kilkanaście poleceń:
+
+Upewnić się, że installer dla Java 8 jest zainstalowany
+
+```bash
+sudo add-apt-repository ppa:webupd8team/java
+sudo apt-get update
+sudo apt-get install oracle-java8-installer
+```
+
+Następnie należy dodać źródła dla narzędzia ``Bazel``
+```bash
+echo "deb [arch=amd64] http://storage.googleapis.com/bazel-apt stable jdk1.8" | sudo tee /etc/apt/sources.list.d/bazel.list
+curl https://bazel.build/bazel-release.pub.gpg | sudo apt-key add -
+```
+
+W tym momencie możemy uruchomić process instalacji oraz aktualizacji do najnowsze wersji. 
+Łączny czas trwania tych skryptów może zająć do kilkudziesięciu minut.
+```bash
+sudo apt-get update && sudo apt-get install bazel
+sudo apt-get upgrade bazel
+```
+
+Gdy Bazel jest już gotowy, mozemy przejść do procesu kompilowania Tensorflow. W tym celu należy wykonać trzy poniższe polecenia:
+```bash
+cd ${GOPATH}/src/github.com/tensorflow/tensorflow
+./configure
+bazel build -c opt //tensorflow:libtensorflow.so
+```
+
+Z uwagi na rozmiar oraz ilość plików zawartych w solucji, na komputerze z procesorem Intel i3 2.6GHz i 12GB pamięci ram, process ten trwał 51 minut. 
+
+Wynikiem operacji jest plik ``libtensorflow.so`` czyli biblioteka, którą jesteśmy zainteresowani.
+Aby była ona przydatna, musimy dodać ją do miejsca gdziebędzie widoczna dla Linkera, czyli np. do folderu ``/usr/local/lib``. Operację kopiowania można wykonać prostym skryptem
+```bash
+cp ${GOPATH}/src/github.com/tensorflow/tensorflow/bazel-bin/tensorflow/libtensorflow.so /usr/local/lib
+```
+
+Ostatnim krokiem będzie wygenerowanie nagłówków dla Go, czyli wywołanie polecenia
+```bash
+go generate github.com/tensorflow/tensorflow/tensorflow/go/op
+```
+
+Jeśli wszystko przebiegło pomyśle, Tensorflow jest gotowy do współpracy z CerberCam. Możemy to zweryfikować uruchamiając próbny kompunikat
+```bash
+go test -v github.com/tensorflow/tensorflow/tensorflow/go
+```
 
 
-// TODO:
-* opis technologii (docker, go)
-* opis tensorflowa
+
+
+
+
+## 8. Deployment
+// docker, docker compose itd
+
+## 9. Azure
+
+## 
