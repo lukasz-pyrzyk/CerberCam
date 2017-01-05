@@ -142,7 +142,7 @@ W porównaniu do poprzedniej komendy, ta jest stosunkowo prosta.
 Pobiera one nowe wiadomości do opublikowania do użytkowników i wysyła je poprzez protokuł SMTP.
 
 Cała komenda wygląda następująco:
-```
+```go
 func HandleSendEmail() {
 	log.Info("Checking for new data in emails queue...")
 
@@ -158,6 +158,48 @@ func HandleSendEmail() {
 		content := fmt.Sprintf("Cerber believes that your picture shows %s (probability %f%%)", *msg.Label, *msg.Probability)
 		emailManager.Send(*msg.Email, "Reconginion results", content)
 	}
+}
+```
+
+Obsługa protokołu SMTP w języku Go jest bardzo prosta, gdyż w standardzie dysponujemy pakietem ``net/smtp``.
+W celu hermetyzacji komponentu, zdecydowaliśmy się wyekstrachować komponent zwany EmailManagerem do osobnego typu.
+Jest to prosta struktura która czyta dane do serwera z konfiguracji.
+
+```go
+type emailManager struct {
+	Login    string
+	Password string
+	Host     string
+	Port     int
+}
+
+func NewEmailManager() *emailManager {
+	manager := new(emailManager)
+	manager.Login = GlobalConfig.Email.Login
+	manager.Password = GlobalConfig.Email.Password
+	manager.Host = GlobalConfig.Email.Host
+	manager.Port = GlobalConfig.Email.Port
+	return manager
+}
+```
+Dla osoby która nie posiada wiedzy na temat języka GO poprzednio zademonstrowana konstrukcja moze wyglądać dość niespodziewanie. 
+Golang nie posiada konceptu konstruktowyów - wedle konwencji metoda do tworzenia instancji powinna być złożona ze słowa ``New`` i nazwy typu, czyli w tym przypadku ``NewEmailManager``.
+Oprócz pól, manager Udostępnia jedną, publiczną metodę która pozwala na wysyłanie wiadomości.
+
+```go
+func (manager emailManager) Send(to string, subject string, content string) {
+	auth := smtp.PlainAuth("", manager.Login, manager.Password, manager.Host)
+	recipients := []string{to}
+
+	message := fmt.Sprintf("To: %s \r\n"+
+		"Subject: %s !\r\n"+
+		"\r\n"+
+		"%s \r\n", to, subject, content)
+
+	msg := []byte(message)
+	hostString := manager.Host + ":" + strconv.Itoa(manager.Port)
+	err := smtp.SendMail(hostString, auth, manager.Login, recipients, msg)
+	failOnError(err, "Cannot send email")
 }
 ```
 
