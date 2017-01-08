@@ -208,12 +208,12 @@ Tensorflow jest to silnik ``machine learning`` stworzony przez ``Google``. Jego 
 
 ## 8. Współpraca Tensorflow z CerberCam
 W celu zintegrowania Tensorflow musieliśmy wykonać kilka zaawansowanych zadań, między innymi skompilować cały projekt lokalnie.
-Pierwszym z nich było pobranie biblioteki pozwalającej na wygenerowanie wrappera pomiędzy językiem C a Go.
+Pierwszym z nich było pobranie generatora pozwalającego na uzyskanie wrappera pomiędzy językiem C a Go.
 ```bash
 go get -d github.com/tensorflow/tensorflow/tensorflow/go
 ```
 
-Aby skompilować projekt, należy upewnić się, że posiadamy narzędzie ``Bazel``, czyli zbiór bibliotek i procesów pozwalających na kompilowanie dużych projektów. W przypadku Ubuntu 15.10 (Willy) należy wykonać kilkanaście poleceń:
+Aby skompilować projekt, należy użyć narzędzia ``Bazel``, czyli systemu budującego projekty napisanego i wykorzystywanego przez Google. W przypadku Ubuntu 15.10 (Willy) należy wykonać kilkanaście poleceń:
 
 Upewnić się, że installer dla Java 8 jest zainstalowany
 
@@ -246,17 +246,17 @@ bazel build -c opt //tensorflow:libtensorflow.so
 Z uwagi na rozmiar oraz ilość plików zawartych w solucji, na komputerze z procesorem Intel i3 2.6GHz i 12GB pamięci ram, process ten trwał 51 minut. 
 
 Wynikiem operacji jest plik ``libtensorflow.so`` czyli biblioteka, którą jesteśmy zainteresowani.
-Aby była ona przydatna, musimy dodać ją do miejsca gdziebędzie widoczna dla Linkera, czyli np. do folderu ``/usr/local/lib``. Operację kopiowania można wykonać prostym skryptem
+Aby CerberCam mógł jej użyć, musimy sprawić, by była ona widoczna dla Linkera. Najprostszym rozwiązaniem będzie dodanie jej do folderu ``/usr/local/lib``. Operację kopiowania można wykonać prostym poleceniem
 ```bash
 cp ${GOPATH}/src/github.com/tensorflow/tensorflow/bazel-bin/tensorflow/libtensorflow.so /usr/local/lib
 ```
 
-Ostatnim krokiem będzie wygenerowanie nagłówków dla Go, czyli wywołanie polecenia
+Ostatnim krokiem będzie samo wygenerowanie nagłówków dla Go, czyli wywołanie polecenia
 ```bash
 go generate github.com/tensorflow/tensorflow/tensorflow/go/op
 ```
 
-Jeśli wszystko przebiegło pomyśle, Tensorflow jest gotowy do współpracy z CerberCam. Możemy to zweryfikować uruchamiając próbny kompunikat
+Jeśli wszystko przebiegło pomyśle, Tensorflow jest gotowy do współpracy z CerberCam. Możemy to zweryfikować uruchamiając poniższy test
 ```bash
 go test -v github.com/tensorflow/tensorflow/tensorflow/go
 ```
