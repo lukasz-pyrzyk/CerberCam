@@ -262,15 +262,15 @@ go test -v github.com/tensorflow/tensorflow/tensorflow/go
 ```
 
 ## 8. Wdrożenie
-Proces wdrażania aplikacji serwerowych przebiega w dwóch krokach
+Proces wdrażania aplikacji serwerowej przebiega w trzech krokach
 * Uruchom nową instancję kolejek dla wiadomości, jeśli takowe nie istnieją. 
 * Uruchom CerberCam z komendą ``receive``
 * Uruchom CerberCam z komenda ``sendEmail``.
 
-Co ważne, wdrażanie nowej wersji nie powoduje niedostępności systemu. CerberCam może zostać wyłączony, a przychodzące wiadomości będą gromadzone na kolejkach.
+Co ważne, wdrażanie nowej wersji nie powoduje niedostępności systemu. CerberCam może zostać wyłączony, a przychodzące wiadomości będą nadal gromadzone na kolejkach.
 
-Całość deploymentu odbywa się poprzez system kontenerów ``Docker``, czyli mikroserwisów odseparowanych od siebie kernelem Linuxa.
-Aby zbudować własnyo obraz Dockera, który będzie reużywalny przez różne komputery, należy stworzyć plik ``Dockerfile``. Dla CerberCam wygląda on następująco:
+Całość deploymentu odbywa się za pomocą usługi ``Docker``, ułatwiającej korzystanie z linuxowych kontenerów, będących odseparowanymi od siebie środowiskami, zwirtualizowanymi na poziomie systemu operacyjnego.
+Aby zbudować własny obraz Dockera, który będzie można wykorzystywać wielokrotnie na różnych maszynach, należy stworzyć plik konfiguracyjny  ``Dockerfile``. Dla CerberCam wygląda on następująco:
 
 ```yaml
 # bazuj na obrazie Linuxa zawierającym Tensorflow
@@ -302,12 +302,12 @@ RUN go install Cerber
 ENTRYPOINT ["/go/bin/Cerber"]
 ```
 
-Po stworzeniu obrazu i opublikowaniu go w repozytorium obrazów, CerberCama można zainstalować za pomocą poniższego polecenia
+Po stworzeniu obrazu i opublikowaniu go w globalnym repozytorium, CerberCama można zainstalować za pomocą poniższego polecenia
 ```bash
 docker run lukaszpyrzyk/cerbercam
 ```
 
-W celu większej automatyzacji procesu wdrażania aplikacji oraz klejek, stworzyliśmy plik ``docker-compose``, który pozwala uruchomić klaster obrazów Dockera za pomocą polecenia.
+W celu większej automatyzacji procesu wdrażania aplikacji oraz kolejek, stworzyliśmy plik ``docker-compose``, który pozwala uruchomić kilka obrazów Dockera na raz za pomocą jednego polecenia.
 ```yaml
 rabbitmq:
   image: rabbitmq:3.6.5-management
