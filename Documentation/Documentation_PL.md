@@ -261,14 +261,77 @@ Jeśli wszystko przebiegło pomyśle, Tensorflow jest gotowy do współpracy z C
 go test -v github.com/tensorflow/tensorflow/tensorflow/go
 ```
 
+## 8. Wdrożenie
+Proces wdrażania aplikacji serwerowych przebiega w dwóch krokach
+* Uruchom nową instancję kolejek dla wiadomości, jeśli takowe nie istnieją. 
+* Uruchom CerberCam z komendą ``receive``
+* Uruchom CerberCam z komenda ``sendEmail``.
 
+Co ważne, wdrażanie nowej wersji nie powoduje niedostępności systemu. CerberCam może zostać wyłączony, a przychodzące wiadomości będą gromadzone na kolejkach.
 
+Całość deploymentu odbywa się poprzez system kontenerów ``Docker``, czyli mikroserwisów odseparowanych od siebie kernelem Linuxa.
+Aby zbudować własnyo obraz Dockera, który będzie reużywalny przez różne komputery, należy stworzyć plik ``Dockerfile``. Dla CerberCam wygląda on następująco:
 
+```yaml
+# bazuj na obrazie Linuxa zawierającym Tensorflow
+FROM bentou/tensorflowgo:latest 
 
+# dodaj informacje o autorach
+MAINTAINER Lukasz Pyrzyk <lukasz.pyrzyk@gmail.com>, Jakub Bentkowski <bentkowski.jakub@gmail.com>
 
-## 8. Deployment
-// docker, docker compose itd
+# skopiuj wszystkie pliki
+COPY ./Src/Server /go/src/Cerber
+
+# zainstaluj zależności
+RUN go get github.com/op/go-logging & go get github.com/streadway/amqp & go get github.com/golang/protobuf/proto & go get gopkg.in/mgo.v2 & go get gopkg.in/yaml.v2 & go get -d github.com/tensorflow/tensorflow/tensorflow/go
+
+# skopiuj potrzebne pliki dla Tensorflow
+COPY ./Patches $GOPATH/src/github.com/tensorflow/tensorflow/tensorflow/go
+
+# dodaj potrzebne repozytoria i pakiety
+RUN add-apt-repository ppa:maarten-fonville/protobuf
+RUN apt-get update && apt-get install -y --allow-unauthenticated protobuf-compiler python-protobuf
+
+# wygeneruj nagłówki dla Golanga
+RUN go get github.com/tensorflow/tensorflow/tensorflow/go/op & go generate -v -x github.com/tensorflow/tensorflow/tensorflow/go/op
+
+# zainstaluj aplikacje w kontenerze
+RUN go install Cerber
+
+# wystaw entrypoint dla stdin
+ENTRYPOINT ["/go/bin/Cerber"]
+```
+
+Po stworzeniu obrazu i opublikowaniu go w repozytorium obrazów, CerberCama można zainstalować za pomocą poniższego polecenia
+```bash
+docker run lukaszpyrzyk/cerbercam
+```
+
+W celu większej automatyzacji procesu wdrażania aplikacji oraz klejek, stworzyliśmy plik ``docker-compose``, który pozwala uruchomić klaster obrazów Dockera za pomocą polecenia.
+```yaml
+rabbitmq:
+  image: rabbitmq:3.6.5-management
+  hostname: rabitmqhost
+  ports:
+    - 8080:15672
+    - 5672:5672
+TensorFlow:
+  image: gcr.io/tensorflow/tensorflow
+  ports:
+    - "8888:8888"
+  restart: always
+CerberReceive:
+  image: lukaszpyrzyk/cerbercam
+  command: "-command=receive"
+CerberSend:
+  image: lukaszpyrzyk/cerbercam
+  command: "-command=sendEmail"
+```
+
+Dzięki temu, uruchomienie całego systemu jest możliwe za pomocą jednego polecenia
+```bash
+docker-compose up
+```
 
 ## 9. Azure
-
-## 
+// TODO
