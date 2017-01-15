@@ -333,5 +333,5 @@ Dzięki temu, uruchomienie całego systemu jest możliwe za pomocą jednego pole
 docker-compose up
 ```
 
-## 9. Azure
-// TODO
+## 9. Chmura
+Platformą hostingową dla projektu jest ``Microsoft Azure``. Serwer jest uruchomiony na wirtualnej maszynie (VM) z systemem Ubuntu Server 16.04 o mocy 3.5GB pamięci RAM, dwóch rdzeni i dysku SSD. Koszt takiej maszyny to 50,82 euro miesięcznie. Z uwagi na potrzebę wysokiej wydajności, zdecydowaliśmy się wybrać centrum danych w Europie Zachodniej, co pozwoli ograniczyć czas tranferu danych. 
