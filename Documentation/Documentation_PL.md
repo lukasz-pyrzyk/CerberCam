@@ -1,5 +1,14 @@
-CerberCam
+CerberCam - system monitoringu domowego 
 ======
+
+| Autorzy          | Jakub Bentkowski, Łukasz Pyrzyk |
+|------------------|--------------------------------|
+| Uczelnia 		   | Politechnika Opolska           |
+| Kierunek studiów | informatyka                    |
+| Typ              | niestacjonarne                 |
+| Rok studiów      | IV                             |
+| Semestr          | VII                            |
+| Rok akademicki   | 2016/2017                      |
 
 ## 1. Opis projektu
 CerberCam jest to system prywatnego monitoringu opartego o dowolną kamerę podłączoną do komputera (np. wbudowana lub na USB). Dodatkowo, CerberCam potrafi rozpoznawać anomalie w dostarczonym obrazie na podstawie jego wyuczonych wzorców.
