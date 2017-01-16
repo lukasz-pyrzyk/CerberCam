@@ -13,6 +13,8 @@ CerberCam - system monitoringu domowego
 ## 1. Opis projektu
 CerberCam jest to system prywatnego monitoringu opartego o dowolną kamerę podłączoną do komputera (np. wbudowana lub na USB). Dodatkowo, CerberCam potrafi rozpoznawać anomalie w dostarczonym obrazie na podstawie jego wyuczonych wzorców.
 
+![Architektura systemu](./system.png)
+
 ## 2. Tryby pracy
 System potrafi pracować w dwóch trybach
 * ciągłego monitoringu danej przestrzeni i wykrywania anomalii
