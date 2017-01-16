@@ -4,6 +4,6 @@
 
 CerberCam is a private monitoring system for any USB or embedded camera. It support ``image recognision``, which allows to detect anomalies on the given picture based on learned patterns and graphs.
 
-![Architecture systemu](./Documentation/system.png)
+![Architecture](./Documentation/system.png)
 
 If you want to read more, see [documentation](./Documentation/Documentation_PL.md) (available only in polish).
